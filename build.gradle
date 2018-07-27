@@ -2,3 +2,19 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+dependencies {
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.+'
+    )
+    testRuntimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine:5.+'
+    )
+}
+
+test {
+    useJUnitPlatform()
+}
+
