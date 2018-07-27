@@ -1,0 +1,7 @@
+<fnmetric>
+<file>/path/to/file/File.c</file>
+<names><![CDATA[fn:SetSlashAtEndOfDirectory;]]></names>
+<metrics>be:0;fe:9;bl:7;lc:26;on:14;ot:9;cc:4;pce:4;pcs:3;hf:1207.17;hr:0.0574841;ml:1229</metrics>
+<coverage>cu:-1;uu:-1;cf:-1;uf:-1</coverage>
+<impact>ad:-1;sd:-1;dd:-1;id:-1;md:-1;</impact>
+</fnmetric>
