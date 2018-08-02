@@ -12,13 +12,27 @@ import de.rkable.coverity.reader.MetricsReader;
 public class MetricsReaderTest {
 
 	@Test
-	public void readSingleElement() {
-		MetricsReader reader = new MetricsReader("resources/MetricsSingle.xml");
+	public void testThatMetricsAreOnlyAvailableAfterParsing() throws Exception {
+		MetricsReader reader = new MetricsReader("src/test/resources/MetricsSingle.xml");
 		List<Metrics> metrics = reader.getMetrics();
 		assertNull(metrics);
 		
 		reader.parseFile();
 		metrics = reader.getMetrics();
 		assertNotNull(metrics);
+	}
+	
+	@Test
+	public void testParsingFailsWhenFileDoesNotExist() {
+		MetricsReader reader = new MetricsReader("fileWhichDoesNotExist.xml");
+		assertThrows(Exception.class, () -> reader.parseFile());
+	}
+	
+	@Test
+	public void testThatSingleMetricIsRead() throws Exception {
+		MetricsReader reader = new MetricsReader("src/test/resources/MetricsSingle.xml");
+		reader.parseFile();
+		List<Metrics> metrics = reader.getMetrics();
+//		assertEquals(1, metrics.size());
 	}
 }
