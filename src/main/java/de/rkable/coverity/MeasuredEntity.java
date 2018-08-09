@@ -6,8 +6,8 @@ package de.rkable.coverity;
  */
 public class MeasuredEntity {
 
-	public Metrics getMetrics() {
-		return new Metrics(0);
-	}
+    public Metrics getMetrics() {
+        return new Metrics(0);
+    }
 
 }
