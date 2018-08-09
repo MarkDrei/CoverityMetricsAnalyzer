@@ -95,8 +95,22 @@ public class MetricsLineParser {
 		}
 	}
 	
+	private static class MethodNameMatcherHandler extends MatcherHandler<String> {
+
+		MethodNameMatcherHandler(String line) {
+			super(line, "<names><!\\[CDATA\\[fn:(.*);\\]\\]></names>");
+		}
+
+		@Override
+		String convertMatcherToResult(Matcher matcher) {
+			return matcher.group(1);
+		}
+		
+	}
+	
 	private MetricMatcherHandler metricMatcherHandler;
 	private FileMatcherHandler fileMatcherHandler;
+	private MethodNameMatcherHandler methodNameMatcherHandler;
 
 	/**
 	 * Create a new parser which handles a single line
@@ -106,6 +120,7 @@ public class MetricsLineParser {
 	public MetricsLineParser(String line) {
 		metricMatcherHandler = new MetricMatcherHandler(line);
 		fileMatcherHandler = new FileMatcherHandler(line);
+		methodNameMatcherHandler = new MethodNameMatcherHandler(line);
 	}
 
 	public boolean isLineWithFile() {
@@ -122,6 +137,14 @@ public class MetricsLineParser {
 
 	public Metrics getMetrics() {
 		return metricMatcherHandler.getParseResult();
+	}
+
+	public boolean isLineWithMethodName() {
+		return methodNameMatcherHandler.isMatch();
+	}
+
+	public String getMethodName() {
+		return methodNameMatcherHandler.getParseResult();
 	}
 
 }

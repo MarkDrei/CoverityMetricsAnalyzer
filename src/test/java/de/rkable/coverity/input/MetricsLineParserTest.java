@@ -31,6 +31,8 @@ public class MetricsLineParserTest {
 		assertEquals(Paths.get("/path/to/file/File.c"), parser.getFileName());
 	}
 	
+	
+	
 	@Test
 	public void testThatNonMetricsLineIsRecognized() {
 		MetricsLineParser parser = new MetricsLineParser("<file>/path/to/file/File.c");
@@ -57,6 +59,26 @@ public class MetricsLineParserTest {
 				);
 		assertTrue(parser.isLineWithMetrics());
 		assertEquals(new Metrics(1207.17), parser.getMetrics());
+		// also works a second time
+		assertEquals(new Metrics(1207.17), parser.getMetrics());
+	}
+	
+	
+	
+	@Test
+	public void testThatNonNameLineIsRecognized() {
+		MetricsLineParser parser = new MetricsLineParser("<file>/path/to/file/File.c");
+		assertFalse(parser.isLineWithMethodName());
+		assertThrows(IllegalStateException.class, () -> parser.getMethodName());
+	}
+	
+	@Test
+	public void testThatMethodNameIsParsedCorrectly() {
+		MetricsLineParser parser = new MetricsLineParser("<names><![CDATA[fn:MethodName;]]></names>");
+		assertTrue(parser.isLineWithMethodName());
+		assertEquals("MethodName", parser.getMethodName());
+		// also works a second time
+		assertEquals("MethodName", parser.getMethodName());
 	}
 
 }
