@@ -7,13 +7,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.rkable.coverity.Metrics;
-import de.rkable.coverity.reader.MetricsReader;
+import de.rkable.coverity.reader.MetricsFileReader;
 
-public class MetricsReaderTest {
+public class MetricsFileReaderTest {
 
 	@Test
 	public void testThatMetricsAreOnlyAvailableAfterParsing() throws Exception {
-		MetricsReader reader = new MetricsReader("src/test/resources/MetricsSingle.xml");
+		MetricsFileReader reader = new MetricsFileReader("src/test/resources/MetricsSingle.xml");
 		List<Metrics> metrics = reader.getMetrics();
 		assertNull(metrics);
 		
@@ -24,15 +24,15 @@ public class MetricsReaderTest {
 	
 	@Test
 	public void testParsingFailsWhenFileDoesNotExist() {
-		MetricsReader reader = new MetricsReader("fileWhichDoesNotExist.xml");
+		MetricsFileReader reader = new MetricsFileReader("fileWhichDoesNotExist.xml");
 		assertThrows(Exception.class, () -> reader.parseFile());
 	}
 	
 	@Test
 	public void testThatSingleMetricIsRead() throws Exception {
-		MetricsReader reader = new MetricsReader("src/test/resources/MetricsSingle.xml");
+		MetricsFileReader reader = new MetricsFileReader("src/test/resources/MetricsSingle.xml");
 		reader.parseFile();
 		List<Metrics> metrics = reader.getMetrics();
-//		assertEquals(1, metrics.size());
+		assertEquals(1, metrics.size());
 	}
 }
