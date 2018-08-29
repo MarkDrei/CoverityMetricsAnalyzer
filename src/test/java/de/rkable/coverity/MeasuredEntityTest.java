@@ -8,7 +8,8 @@ public class MeasuredEntityTest {
 
     @Test
     public void testMeasuredEntity() {
-        MeasuredEntity measuredEntity = new MeasuredEntity();
+        MethodMetrics measuredEntity = new MethodMetrics();
+        measuredEntity.setMetrics(new Metrics(0.123));
         Metrics metrics = measuredEntity.getMetrics();
         assertNotNull(metrics);
     }

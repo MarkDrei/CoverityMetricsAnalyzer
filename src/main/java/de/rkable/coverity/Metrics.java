@@ -1,5 +1,9 @@
 package de.rkable.coverity;
 
+/**
+ * Metrics for a single method
+ *
+ */
 public class Metrics {
 
     final public double halsteadEffort;

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 
 import de.rkable.coverity.Metrics;
-import de.rkable.coverity.MetricsLineParser;
+import de.rkable.coverity.input.MetricsLineParser;
 
 public class MetricsLineParserTest {
 
