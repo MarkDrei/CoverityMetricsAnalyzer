@@ -51,11 +51,24 @@ public class SimpleHalsteadAnalyzerTest {
     public void testThatReportContainsTheMethodName() {
         List<MethodMetrics> inputMetrics = new ArrayList<>();
         inputMetrics.add(getInputMetric1());
+        inputMetrics.add(getInputMetric2());
         
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(inputMetrics);
         Report analysis = analyzer.getAnalysis();
-        assertContains("MethodName1", analysis.toString());
+        assertContains("MethodName2", analysis.toString());
+    }
+    
+    @Test
+    public void testThatReportContainsFileName() {
+        List<MethodMetrics> inputMetrics = new ArrayList<>();
+        inputMetrics.add(getInputMetric1());
+        inputMetrics.add(getInputMetric2());
+        
+        MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
+        analyzer.startAnalysis(inputMetrics);
+        Report analysis = analyzer.getAnalysis();
+        assertContains("/path/to/file2", analysis.toString());
     }
 
     private void assertContains(String needle, String haystack) {
@@ -66,6 +79,7 @@ public class SimpleHalsteadAnalyzerTest {
         MethodMetrics metrics = new MethodMetrics();
         metrics.setMetrics(new Metrics(0.123));
         metrics.setMethodName("MethodName1");
+        metrics.setFileName("/path/to/file1");
         return metrics;
     }
     
@@ -73,6 +87,7 @@ public class SimpleHalsteadAnalyzerTest {
         MethodMetrics metrics = new MethodMetrics();
         metrics.setMetrics(new Metrics(0.234));
         metrics.setMethodName("MethodName2");
+        metrics.setFileName("/path/to/file2");
         return metrics;
     }
 }

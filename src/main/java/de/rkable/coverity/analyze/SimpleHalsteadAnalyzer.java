@@ -33,8 +33,11 @@ public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
     public Report getAnalysis() {
         StringBuilder sb = new StringBuilder();
         
+        sb.append("File path: ");
+        sb.append(worstMethod.getFileName());
+        sb.append(System.lineSeparator());
+        
         sb.append("Method name: ");
-        sb.append(": ");
         sb.append(worstMethod.getMethodName());
         sb.append(System.lineSeparator());
         
