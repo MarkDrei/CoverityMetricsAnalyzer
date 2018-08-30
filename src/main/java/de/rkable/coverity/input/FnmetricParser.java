@@ -3,6 +3,7 @@ package de.rkable.coverity.input;
 import java.io.IOException;
 
 import de.rkable.coverity.MethodMetrics;
+import de.rkable.coverity.MethodMetrics.MethodMetricsBuilder;
 
 public class FnmetricParser {
 
@@ -43,11 +44,11 @@ public class FnmetricParser {
             throw new IOException("Content of the metrics field is wrong: " + metric);
         }
         
-        MethodMetrics methodMetric = new MethodMetrics();
-        methodMetric.setMetrics(metricParser.getMetrics());
-        methodMetric.setMethodName(namesParser.getMethodName());
-        methodMetric.setFileName(fileParser.getFileName().toString());
-        return methodMetric;
+        MethodMetricsBuilder builder = new MethodMetricsBuilder();
+        builder.metrics(metricParser.getMetrics());
+        builder.methodName(namesParser.getMethodName());
+        builder.fileName(fileParser.getFileName().toString());
+        return builder.build();
     }
 
 }

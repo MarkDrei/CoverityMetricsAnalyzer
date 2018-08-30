@@ -1,6 +1,8 @@
 ToDo List
 ==========
 
+continue with FileHierarchyBuilderTest
+
 Make the report pretty
   Separate representation from domain logic
 

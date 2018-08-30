@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.rkable.coverity.MethodMetrics;
+import de.rkable.coverity.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.MethodMetricsBuilderTest;
 import de.rkable.coverity.Metrics;
 
 public class SimpleHalsteadAnalyzerTest {
@@ -76,18 +78,18 @@ public class SimpleHalsteadAnalyzerTest {
     }
 
     private MethodMetrics getInputMetric1() {
-        MethodMetrics metrics = new MethodMetrics();
-        metrics.setMetrics(new Metrics(0.123, 0.02));
-        metrics.setMethodName("MethodName1");
-        metrics.setFileName("/path/to/file1");
-        return metrics;
+        MethodMetricsBuilder metrics = new MethodMetricsBuilder();
+        metrics.metrics(new Metrics(0.123, 0.02));
+        metrics.methodName("MethodName1");
+        metrics.fileName("/path/to/file1");
+        return metrics.build();
     }
     
     private MethodMetrics getInputMetric2() {
-        MethodMetrics metrics = new MethodMetrics();
-        metrics.setMetrics(new Metrics(0.234, 0.04));
-        metrics.setMethodName("MethodName2");
-        metrics.setFileName("/path/to/file2");
-        return metrics;
+        MethodMetricsBuilder metrics = new MethodMetricsBuilder();
+        metrics.metrics(new Metrics(0.234, 0.04));
+        metrics.methodName("MethodName2");
+        metrics.fileName("/path/to/file2");
+        return metrics.build();
     }
 }
