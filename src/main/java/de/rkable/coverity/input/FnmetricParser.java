@@ -46,6 +46,7 @@ public class FnmetricParser {
         MethodMetrics methodMetric = new MethodMetrics();
         methodMetric.setMetrics(metricParser.getMetrics());
         methodMetric.setMethodName(namesParser.getMethodName());
+        methodMetric.setFileName(fileParser.getFileName().toString());
         return methodMetric;
     }
 

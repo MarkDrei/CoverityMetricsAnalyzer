@@ -116,4 +116,11 @@ public class FnmetricParserTest {
         MethodMetrics metrics = parser.parse();
         assertEquals("MethodName", metrics.getMethodName());
     }
+    
+    @Test
+    public void testThatTheFileNameIsReturned() throws Exception {
+        FnmetricParser parser = new FnmetricParser(GOOD_INPUT);
+        MethodMetrics metrics = parser.parse();
+        assertEquals("/path/to/file/File.c", metrics.getFileName());
+    }
 }
