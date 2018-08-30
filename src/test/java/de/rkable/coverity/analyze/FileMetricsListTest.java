@@ -2,6 +2,7 @@ package de.rkable.coverity.analyze;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +13,7 @@ import de.rkable.coverity.FileMetrics;
 import de.rkable.coverity.MethodMetrics;
 import de.rkable.coverity.MethodMetrics.MethodMetricsBuilder;
 
-public class FileHierarchyTest {
+public class FileMetricsListTest {
 
     @Test
     public void combineTwoMethodsInOneFile() {
@@ -24,10 +25,11 @@ public class FileHierarchyTest {
         
         List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB);
         
-        FileHierarchy hierarchyBuilder = new FileHierarchy();
-        Collection<FileMetrics> fileMetrics = hierarchyBuilder.buildHierarchy(metrics);
+        FileMetricsList hierarchyBuilder = new FileMetricsList();
+        Collection<FileMetrics> fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
         
         assertEquals(1, fileMetrics.size());
+        assertEquals("fileA", fileMetrics.iterator().next().getFile());
     }
     
     @Test
@@ -43,9 +45,17 @@ public class FileHierarchyTest {
         
         List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB, metricsC);
         
-        FileHierarchy hierarchyBuilder = new FileHierarchy();
-        Collection<FileMetrics> fileMetrics = hierarchyBuilder.buildHierarchy(metrics);
+        FileMetricsList hierarchyBuilder = new FileMetricsList();
+        Collection<FileMetrics> fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
         
         assertEquals(2, fileMetrics.size());
+        
+        // check the files
+        List<String> fileNames = new ArrayList<>();
+        for (FileMetrics fileMetric : fileMetrics) {
+            fileNames.add(fileMetric.getFile());
+        }
+        assertTrue(fileNames.contains("fileA"));
+        assertTrue(fileNames.contains("fileB"));
     }
 }

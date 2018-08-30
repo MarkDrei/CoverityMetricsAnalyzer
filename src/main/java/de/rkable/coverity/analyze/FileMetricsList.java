@@ -8,17 +8,20 @@ import java.util.Map;
 import de.rkable.coverity.FileMetrics;
 import de.rkable.coverity.MethodMetrics;
 
-public class FileHierarchy {
-    
-    Map<String, FileMetrics> fileMap = new HashMap<>();
+/**
+ * Maps all metrics to the files to which they belong
+ *
+ */
+public class FileMetricsList {
 
-    public Collection<FileMetrics> buildHierarchy(List<MethodMetrics> metrics) {
+    public Collection<FileMetrics> generateFileMetrics(List<MethodMetrics> metrics) {
+        Map<String, FileMetrics> fileMap = new HashMap<>();
         for (MethodMetrics metric : metrics) {
             // get the right element
             String fileName = metric.getFileName();
             FileMetrics fileMetrics = fileMap.get(fileName);
             if (fileMetrics == null) {
-                fileMetrics = new FileMetrics();
+                fileMetrics = new FileMetrics(fileName);
                 fileMap.put(fileName, fileMetrics);
             }
         }
