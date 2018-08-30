@@ -25,8 +25,9 @@ public class MethodMetrics {
             return this;
         }
 
-        public void fileName(String fileName) {
+        public MethodMetricsBuilder fileName(String fileName) {
             this.fileName = fileName;
+            return this;
         }
 
         public MethodMetricsBuilder metrics(Metrics metrics) {

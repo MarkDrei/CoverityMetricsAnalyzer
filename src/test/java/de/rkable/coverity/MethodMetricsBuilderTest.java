@@ -18,7 +18,7 @@ public class MethodMetricsBuilderTest {
     @Test
     public void testConstructionWithStrings() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        builder.methodName("methodName").fileName("fileName");
+        builder.methodName("methodName").fileName("fileName").methodName("methodName");
         MethodMetrics metrics = builder.build();
         assertEquals("methodName", metrics.getMethodName());
         assertEquals("fileName", metrics.getFileName());
