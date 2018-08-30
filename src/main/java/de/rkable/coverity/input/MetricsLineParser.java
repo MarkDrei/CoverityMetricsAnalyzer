@@ -57,29 +57,32 @@ public class MetricsLineParser {
     }
 
     private static class MetricMatcherHandler extends MatcherHandler<Metrics> {
+        private final static String NUMBER = "\\d+(\\.\\d+)?(e\\+\\d+)?";
+        /// always adds 3 groups
+        private final static String NUMBER_GROUP = "(" + NUMBER + ")"; 
 
         MetricMatcherHandler(String line) {
             super(line,
-                    "(<metrics>)"
-                    + "(be:\\d+;)"
-                    + "(fe:\\d+;)"
-                    + "(bl:\\d+;)"
-                    + "(lc:\\d+;)"
-                    + "(on:\\d+;)"
-                    + "(ot:\\d+;)"
-                    + "(cc:\\d+;)"
-                    + "(pce:\\d+;)"
-                    + "(pcs:\\d+;)"
-                    + "hf:(\\d+\\.\\d+);"
-                    + "(hr:\\d+\\.\\d+;)"
-                    + "(ml:\\d+)"
-                    + "(</metrics>)"
+                    "<metrics>"
+                    + "be:"  + NUMBER_GROUP + ";" // groups 1..3
+                    + "fe:"  + NUMBER_GROUP + ";" // groups 4..6
+                    + "bl:"  + NUMBER_GROUP + ";" // groups 7..9
+                    + "lc:"  + NUMBER_GROUP + ";" // groups 10..12
+                    + "on:"  + NUMBER_GROUP + ";" // groups 13..15
+                    + "ot:"  + NUMBER_GROUP + ";" // groups 16..18
+                    + "cc:"  + NUMBER_GROUP + ";" // groups 19..21
+                    + "pce:" + NUMBER_GROUP + ";" // groups 22..24
+                    + "pcs:" + NUMBER_GROUP + ";" // groups 25..27
+                    + "hf:"  + NUMBER_GROUP + ";" // groups 28..30
+                    + "hr:"  + NUMBER_GROUP + ";" // groups 31..33
+                    + "ml:" + NUMBER_GROUP
+                    + "</metrics>"
                     );
 		}
 
         @Override
         Metrics convertMatcherToResult(Matcher matcher2) {
-            return new Metrics(Double.parseDouble(matcher2.group(11)));
+            return new Metrics(Double.parseDouble(matcher2.group(28)));
         }
     }
 

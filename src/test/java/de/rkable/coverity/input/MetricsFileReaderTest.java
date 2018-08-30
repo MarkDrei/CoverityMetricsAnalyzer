@@ -38,4 +38,18 @@ public class MetricsFileReaderTest {
         Metrics metrics = metricsList.get(0).getMetrics();
         assertEquals(1207.17, metrics.halsteadEffort, 0.01);
     }
+    
+    @Test
+    public void testThatThreeMethodsAreRead() throws Exception {
+        MetricsFileReader reader = new MetricsFileReader("src/test/resources/MetricsThreeLines.xml");
+        reader.parseFile();
+        List<MethodMetrics> metricsList = reader.getMetricEntities();
+        assertEquals(3, metricsList.size());
+        Metrics metrics = metricsList.get(0).getMetrics();
+        assertEquals(1107.17, metrics.halsteadEffort, 0.01);
+        metrics = metricsList.get(1).getMetrics();
+        assertEquals(1207.17, metrics.halsteadEffort, 0.01);
+        metrics = metricsList.get(2).getMetrics();
+        assertEquals(1307.17, metrics.halsteadEffort, 0.01);
+    }
 }

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import de.rkable.coverity.MethodMetrics;
 
@@ -47,24 +46,22 @@ public class MetricsFileReader {
 	}
 
 	private void readMetrics(BufferedReader bufferedReader) throws IOException {
-	    /* String openMetric =*/  bufferedReader.readLine();
-	    String file =             bufferedReader.readLine();
-	    String names =            bufferedReader.readLine();
-	    String metric =           bufferedReader.readLine();
-	    /* String coverage =*/    bufferedReader.readLine();
-	    /* String impact =*/      bufferedReader.readLine();
-	    /* String closeMetric =*/ bufferedReader.readLine();
-	    
-	    MetricsLineParser fileParser = new MetricsLineParser(file);
-	    MetricsLineParser namesParser = new MetricsLineParser(names);
-	    MetricsLineParser metricParser = new MetricsLineParser(metric);
-	    
-	    if (!fileParser.isLineWithFile() || !namesParser.isLineWithMethodName() || !metricParser.isLineWithMetrics()) {
-	        throw new IOException("Expected content not found in the lines");
+	    for (;;) {
+	        String[] input = new String[] {
+	                bufferedReader.readLine(), 
+	                bufferedReader.readLine(), 
+	                bufferedReader.readLine(), 
+	                bufferedReader.readLine(), 
+	                bufferedReader.readLine(), 
+	                bufferedReader.readLine(), 
+	                bufferedReader.readLine()};
+ 
+	        if (input[6] == null) {
+	            return;
+	        }
+	        
+	        methodMetrics.add(new FnmetricParser(input).parse());
 	    }
-	    MethodMetrics methodMetric = new MethodMetrics();
-        methodMetric.setMetrics(metricParser.getMetrics());
-        methodMetrics.add(methodMetric);
 	}
 
 }

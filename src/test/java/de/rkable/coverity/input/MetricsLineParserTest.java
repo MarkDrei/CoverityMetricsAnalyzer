@@ -60,6 +60,68 @@ public class MetricsLineParserTest {
         // also works a second time
         assertEquals(new Metrics(1207.17), parser.getMetrics());
     }
+    
+    @Test
+    public void testThatZeroIsValidDouble() {
+        MetricsLineParser parser = new MetricsLineParser(
+                "<metrics>be:0;"
+                        + "fe:9;"
+                        + "bl:7;"
+                        + "lc:26;"
+                        + "on:14;"
+                        + "ot:9;"
+                        + "cc:4;"
+                        + "pce:4;"
+                        + "pcs:3;"
+                        + "hf:0;"
+                        + "hr:0;"
+                        + "ml:1229"
+                        + "</metrics>"
+                );
+        assertTrue(parser.isLineWithMetrics());
+        assertEquals(new Metrics(0), parser.getMetrics());
+    }
+    
+    @Test
+    public void testThatScientificNotationIsValidInPce() {
+        MetricsLineParser parser = new MetricsLineParser(
+                "<metrics>be:0;"
+                        + "fe:9;"
+                        + "bl:7;"
+                        + "lc:26;"
+                        + "on:14;"
+                        + "ot:9;"
+                        + "cc:4;"
+                        + "pce:4e+28;"
+                        + "pcs:3e+28;"
+                        + "hf:0;"
+                        + "hr:0;"
+                        + "ml:1229"
+                        + "</metrics>"
+                );
+        assertTrue(parser.isLineWithMetrics());
+    }
+    
+    @Test
+    public void testBug() {
+        MetricsLineParser parser = new MetricsLineParser(
+                "<metrics>"
+                    + "be:0;"
+                    + "fe:373;"
+                    + "bl:280;"
+                    + "lc:741;"
+                    + "on:1066;"
+                    + "ot:10;"
+                    + "cc:95;"
+                    + "pce:1.9807e+28;"
+                    + "pcs:1.9807e+28;"
+                    + "hf:402642;"
+                    + "hr:15.3792;"
+                    + "ml:810"
+                    + "</metrics>"
+                );
+        assertTrue(parser.isLineWithMetrics());
+    }
 
     @Test
     public void testThatNonNameLineIsRecognized() {
