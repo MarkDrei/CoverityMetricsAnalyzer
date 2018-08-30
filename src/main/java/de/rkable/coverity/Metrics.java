@@ -7,9 +7,11 @@ package de.rkable.coverity;
 public class Metrics {
 
     final public double halsteadEffort;
+    final public double halsteadError;
 
-    public Metrics(double halsteadEffort) {
+    public Metrics(double halsteadEffort, double halsteadError) {
         this.halsteadEffort = halsteadEffort;
+        this.halsteadError = halsteadError;
     }
 
     @Override
@@ -24,6 +26,8 @@ public class Metrics {
         long temp;
         temp = Double.doubleToLongBits(halsteadEffort);
         result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(halsteadError);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
@@ -37,6 +41,8 @@ public class Metrics {
             return false;
         Metrics other = (Metrics) obj;
         if (Double.doubleToLongBits(halsteadEffort) != Double.doubleToLongBits(other.halsteadEffort))
+            return false;
+        if (Double.doubleToLongBits(halsteadError) != Double.doubleToLongBits(other.halsteadError))
             return false;
         return true;
     }

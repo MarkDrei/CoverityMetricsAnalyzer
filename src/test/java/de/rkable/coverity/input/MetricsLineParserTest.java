@@ -56,9 +56,9 @@ public class MetricsLineParserTest {
                 + "</metrics>"
                 );
         assertTrue(parser.isLineWithMetrics());
-        assertEquals(new Metrics(1207.17), parser.getMetrics());
+        assertEquals(new Metrics(1207.17, 0.0574841), parser.getMetrics());
         // also works a second time
-        assertEquals(new Metrics(1207.17), parser.getMetrics());
+        assertEquals(new Metrics(1207.17, 0.0574841), parser.getMetrics());
     }
     
     @Test
@@ -79,7 +79,7 @@ public class MetricsLineParserTest {
                         + "</metrics>"
                 );
         assertTrue(parser.isLineWithMetrics());
-        assertEquals(new Metrics(0), parser.getMetrics());
+        assertEquals(new Metrics(0, 0), parser.getMetrics());
     }
     
     @Test

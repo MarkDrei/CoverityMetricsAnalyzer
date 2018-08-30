@@ -6,7 +6,8 @@ import de.rkable.coverity.MethodMetrics;
 
 public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
     
-    private final static String HALSTEAD_EFFORT = "Highest Halstead effort";
+    private final static String HALSTEAD_EFFORT = "Halstead effort";
+    private final static String HALSTEAD_ERROR = "Halstead error";
     
     private MethodMetrics worstMethod;
 
@@ -41,10 +42,15 @@ public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
         sb.append(worstMethod.getMethodName());
         sb.append(System.lineSeparator());
         
-        
         sb.append(HALSTEAD_EFFORT);
         sb.append(": ");
         sb.append(worstMethod.getMetrics().halsteadEffort);
+        sb.append(System.lineSeparator());
+        
+        sb.append(HALSTEAD_ERROR);
+        sb.append(": ");
+        sb.append(worstMethod.getMetrics().halsteadError);
+        sb.append(System.lineSeparator());
         
         StringReport report = new StringReport(sb.toString());
         

@@ -82,7 +82,8 @@ public class MetricsLineParser {
 
         @Override
         Metrics convertMatcherToResult(Matcher matcher2) {
-            return new Metrics(Double.parseDouble(matcher2.group(28)));
+            return new Metrics(Double.parseDouble(matcher2.group(28)),
+                    Double.parseDouble(matcher2.group(31)));
         }
     }
 

@@ -20,7 +20,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(inputMetrics);
         Report analysis = analyzer.getAnalysis();
-        assertContains("Highest Halstead effort: 0.123", analysis.toString());
+        assertContains("Halstead effort: 0.123", analysis.toString());
     }
     
     @Test
@@ -31,7 +31,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(inputMetrics);
         Report analysis = analyzer.getAnalysis();
-        assertContains("Highest Halstead effort: 0.234", analysis.toString());
+        assertContains("Halstead effort: 0.234", analysis.toString());
     }
     
     @Test
@@ -43,7 +43,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(inputMetrics);
         Report analysis = analyzer.getAnalysis();
-        assertContains("Highest Halstead effort: 0.234", analysis.toString());
+        assertContains("Halstead effort: 0.234", analysis.toString());
     }
     
     
@@ -77,7 +77,7 @@ public class SimpleHalsteadAnalyzerTest {
 
     private MethodMetrics getInputMetric1() {
         MethodMetrics metrics = new MethodMetrics();
-        metrics.setMetrics(new Metrics(0.123));
+        metrics.setMetrics(new Metrics(0.123, 0.02));
         metrics.setMethodName("MethodName1");
         metrics.setFileName("/path/to/file1");
         return metrics;
@@ -85,7 +85,7 @@ public class SimpleHalsteadAnalyzerTest {
     
     private MethodMetrics getInputMetric2() {
         MethodMetrics metrics = new MethodMetrics();
-        metrics.setMetrics(new Metrics(0.234));
+        metrics.setMetrics(new Metrics(0.234, 0.04));
         metrics.setMethodName("MethodName2");
         metrics.setFileName("/path/to/file2");
         return metrics;
