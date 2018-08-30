@@ -10,17 +10,19 @@ import de.rkable.coverity.MethodMetrics;
 
 public class TestFnmetricParser {
 
+    private final static String[] GOOD_INPUT = {
+            "<fnmetric>",
+            "<file>/path/to/file/File.c</file>",
+            "<names><![CDATA[fn:MethodName;]]></names>",
+            "<metrics>be:0;fe:9;bl:7;lc:26;on:14;ot:9;cc:4;pce:4;pcs:3;hf:1207.17;hr:0.0574841;ml:1229</metrics>",
+            "<coverage>cu:-1;uu:-1;cf:-1;uf:-1</coverage>",
+            "<impact>ad:-1;sd:-1;dd:-1;id:-1;md:-1;</impact>",
+            "</fnmetric>"
+            };
+    
     @Test
     public void testThatParserParsesGoodLines() throws Exception {
-        FnmetricParser parser = new FnmetricParser(
-                "<fnmetric>",
-                "<file>/path/to/file/File.c</file>",
-                "<names><![CDATA[fn:MethodName;]]></names>",
-                "<metrics>be:0;fe:9;bl:7;lc:26;on:14;ot:9;cc:4;pce:4;pcs:3;hf:1207.17;hr:0.0574841;ml:1229</metrics>",
-                "<coverage>cu:-1;uu:-1;cf:-1;uf:-1</coverage>",
-                "<impact>ad:-1;sd:-1;dd:-1;id:-1;md:-1;</impact>",
-                "</fnmetric>"
-                );
+        FnmetricParser parser = new FnmetricParser(GOOD_INPUT);
         MethodMetrics metrics = parser.parse();
         assertEquals(1207.17, metrics.getMetrics().halsteadEffort, 0.1);
     }
@@ -106,5 +108,12 @@ public class TestFnmetricParser {
             assertTrue(e.getMessage().contains("metrics"));
             assertTrue(e.getMessage().contains("foobar"));
         }
+    }
+    
+    @Test
+    public void testThatTheMethodNameIsReturned() throws Exception {
+        FnmetricParser parser = new FnmetricParser(GOOD_INPUT);
+        MethodMetrics metrics = parser.parse();
+        assertEquals("MethodName", metrics.getMethodName());
     }
 }
