@@ -17,9 +17,10 @@ public class TestSimpleHalsteadAnalyzer {
         List<MethodMetrics> inputMetrics = new ArrayList<>();
         inputMetrics.add(getInputMetric1());
         
-        SimpleHalsteadAnalyzer analyzer = new SimpleHalsteadAnalyzer(inputMetrics);
-        String analysis = analyzer.getAnalysis();
-        assertContains("Highest Halstead effort: 0.123", analysis);
+        MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
+        analyzer.startAnalysis(inputMetrics);
+        Report analysis = analyzer.getAnalysis();
+        assertContains("Highest Halstead effort: 0.123", analysis.toString());
     }
     
     @Test
@@ -27,9 +28,10 @@ public class TestSimpleHalsteadAnalyzer {
         List<MethodMetrics> inputMetrics = new ArrayList<>();
         inputMetrics.add(getInputMetric2());
         
-        SimpleHalsteadAnalyzer analyzer = new SimpleHalsteadAnalyzer(inputMetrics);
-        String analysis = analyzer.getAnalysis();
-        assertContains("Highest Halstead effort: 0.234", analysis);
+        MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
+        analyzer.startAnalysis(inputMetrics);
+        Report analysis = analyzer.getAnalysis();
+        assertContains("Highest Halstead effort: 0.234", analysis.toString());
     }
 
     private void assertContains(String needle, String haystack) {

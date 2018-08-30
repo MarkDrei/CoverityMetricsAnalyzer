@@ -33,14 +33,11 @@ public class MetricsFileReader {
 
 	public void parseFile() throws IOException {
 		File file = new File(path);
-		String absolutePath = file.getAbsolutePath();
-		System.out.println(absolutePath);
 		
 		try (FileInputStream iStream = new FileInputStream(file)) {
 			methodMetrics = new ArrayList<>();
 			readMetrics(new BufferedReader(new InputStreamReader(iStream)));
 		} catch (IOException e) {
-			e.printStackTrace();
 			throw new IOException("Failed to parse the file " + file.getAbsolutePath(), e);
 		}
 	}

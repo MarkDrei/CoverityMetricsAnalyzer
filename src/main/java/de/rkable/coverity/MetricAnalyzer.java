@@ -3,6 +3,7 @@ package de.rkable.coverity;
 import java.io.IOException;
 import java.util.List;
 
+import de.rkable.coverity.analyze.MetricsAnalyzer;
 import de.rkable.coverity.analyze.SimpleHalsteadAnalyzer;
 import de.rkable.coverity.input.MetricsFileReader;
 
@@ -25,7 +26,8 @@ public class MetricAnalyzer {
         }
         
         List<MethodMetrics> metricEntities = fileReader.getMetricEntities();
-        SimpleHalsteadAnalyzer analyzer = new SimpleHalsteadAnalyzer(metricEntities);
+        MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
+        analyzer.startAnalysis(metricEntities);
         System.out.println(analyzer.getAnalysis());
     }
 
