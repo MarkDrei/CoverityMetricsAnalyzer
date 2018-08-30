@@ -94,12 +94,14 @@ public class MetricsLineParserTest {
                         + "cc:4;"
                         + "pce:4e+28;"
                         + "pcs:3e+28;"
-                        + "hf:0;"
-                        + "hr:0;"
+                        + "hf:5e+28;"
+                        + "hr:6e+29;"
                         + "ml:1229"
                         + "</metrics>"
                 );
         assertTrue(parser.isLineWithMetrics());
+        assertEquals(5e28, parser.getMetrics().halsteadEffort, 1);
+        assertEquals(6e29, parser.getMetrics().halsteadError, 1);
     }
     
     @Test
