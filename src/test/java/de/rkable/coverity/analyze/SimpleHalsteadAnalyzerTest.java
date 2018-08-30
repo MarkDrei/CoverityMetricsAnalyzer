@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import de.rkable.coverity.MethodMetrics;
 import de.rkable.coverity.Metrics;
 
-public class TestSimpleHalsteadAnalyzer {
+public class SimpleHalsteadAnalyzerTest {
 
     @Test
     public void testThatSimpleMetricReturnHalsteadEffort() {

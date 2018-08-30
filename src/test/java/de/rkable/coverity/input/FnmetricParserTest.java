@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import de.rkable.coverity.MethodMetrics;
 
-public class TestFnmetricParser {
+public class FnmetricParserTest {
 
     private final static String[] GOOD_INPUT = {
             "<fnmetric>",
