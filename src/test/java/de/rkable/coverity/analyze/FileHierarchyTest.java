@@ -12,7 +12,7 @@ import de.rkable.coverity.FileMetrics;
 import de.rkable.coverity.MethodMetrics;
 import de.rkable.coverity.MethodMetrics.MethodMetricsBuilder;
 
-public class FileHierarchyBuilderTest {
+public class FileHierarchyTest {
 
     @Test
     public void combineTwoMethodsInOneFile() {
@@ -24,7 +24,7 @@ public class FileHierarchyBuilderTest {
         
         List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB);
         
-        FileHierarchyBuilder hierarchyBuilder = new FileHierarchyBuilder();
+        FileHierarchy hierarchyBuilder = new FileHierarchy();
         Collection<FileMetrics> fileMetrics = hierarchyBuilder.buildHierarchy(metrics);
         
         assertEquals(1, fileMetrics.size());
@@ -38,9 +38,12 @@ public class FileHierarchyBuilderTest {
         builder = new MethodMetricsBuilder();
         MethodMetrics metricsB = builder.fileName("fileB").methodName("methodB").build();  
         
-        List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB);
+        builder = new MethodMetricsBuilder();
+        MethodMetrics metricsC = builder.fileName("fileB").methodName("methodC").build();
         
-        FileHierarchyBuilder hierarchyBuilder = new FileHierarchyBuilder();
+        List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB, metricsC);
+        
+        FileHierarchy hierarchyBuilder = new FileHierarchy();
         Collection<FileMetrics> fileMetrics = hierarchyBuilder.buildHierarchy(metrics);
         
         assertEquals(2, fileMetrics.size());

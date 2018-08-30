@@ -8,7 +8,7 @@ import java.util.Map;
 import de.rkable.coverity.FileMetrics;
 import de.rkable.coverity.MethodMetrics;
 
-public class FileHierarchyBuilder {
+public class FileHierarchy {
     
     Map<String, FileMetrics> fileMap = new HashMap<>();
 
