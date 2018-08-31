@@ -3,12 +3,12 @@ package de.rkable.coverity.metrics;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FileMetrics {
+public class File {
 
     private final String fileName;
-    private final Collection<MethodMetrics> methodMetrics = new ArrayList<>();
+    private final Collection<Method> methodMetrics = new ArrayList<>();
 
-    public FileMetrics(String fileName) {
+    public File(String fileName) {
         this.fileName = fileName;
     }
     
@@ -16,11 +16,11 @@ public class FileMetrics {
         return fileName;
     }
     
-    public void addMethodMetric(MethodMetrics metrics) {
+    public void addMethodMetric(Method metrics) {
         methodMetrics.add(metrics);
     }
 
-    public Collection<MethodMetrics> getMethodMetrics() {
+    public Collection<Method> getMethodMetrics() {
         return methodMetrics;
     }
 

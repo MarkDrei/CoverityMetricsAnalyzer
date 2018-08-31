@@ -7,10 +7,10 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.metrics.DirectoryMetrics;
-import de.rkable.coverity.metrics.FileMetrics;
-import de.rkable.coverity.metrics.MethodMetrics;
-import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.Directory;
+import de.rkable.coverity.metrics.File;
+import de.rkable.coverity.metrics.Method;
+import de.rkable.coverity.metrics.Method.MethodMetricsBuilder;
 import de.rkable.coverity.metrics.Metrics;
 
 public class SimpleHalsteadAnalyzerTest {
@@ -60,36 +60,36 @@ public class SimpleHalsteadAnalyzerTest {
         assertTrue(haystack.contains(needle), "\"" + haystack +"\" is exptected to contain \"" + needle + "\"");
     }
     
-    private Collection<DirectoryMetrics> getTwoInputs() {
+    private Collection<Directory> getTwoInputs() {
         Arrays.asList(getInputMetric1(), getInputMetric2());
         return Arrays.asList(getInputMetric1(), getInputMetric2());
     }
 
-    private DirectoryMetrics getInputMetric1() {
+    private Directory getInputMetric1() {
         MethodMetricsBuilder metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.123, 0.02));
         metrics.methodName("MethodName1");
         metrics.fileName("/dir/file");
-        MethodMetrics method = metrics.build();
+        Method method = metrics.build();
         
-        FileMetrics file = new FileMetrics("file");
+        File file = new File("file");
         file.addMethodMetric(method);
-        DirectoryMetrics directory = new DirectoryMetrics("dir");
+        Directory directory = new Directory("dir");
         directory.addFileMetrics(file);
         
         return directory;
     }
     
-    private DirectoryMetrics getInputMetric2() {
+    private Directory getInputMetric2() {
         MethodMetricsBuilder metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.234, 0.04));
         metrics.methodName("MethodName2");
         metrics.fileName("/dir/file2");
-        MethodMetrics method = metrics.build();
+        Method method = metrics.build();
         
-        FileMetrics file = new FileMetrics("file2");
+        File file = new File("file2");
         file.addMethodMetric(method);
-        DirectoryMetrics directory = new DirectoryMetrics("dir");
+        Directory directory = new Directory("dir");
         directory.addFileMetrics(file);
         
         return directory;

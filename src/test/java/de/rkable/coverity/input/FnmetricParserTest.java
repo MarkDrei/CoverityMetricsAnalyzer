@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.Method;
 
 public class FnmetricParserTest {
 
@@ -23,7 +23,7 @@ public class FnmetricParserTest {
     @Test
     public void testThatParserParsesGoodLines() throws Exception {
         FnmetricParser parser = new FnmetricParser(GOOD_INPUT);
-        MethodMetrics metrics = parser.parse();
+        Method metrics = parser.parse();
         assertEquals(1207.17, metrics.getMetrics().halsteadEffort, 0.1);
     }
     
@@ -113,14 +113,14 @@ public class FnmetricParserTest {
     @Test
     public void testThatTheMethodNameIsReturned() throws Exception {
         FnmetricParser parser = new FnmetricParser(GOOD_INPUT);
-        MethodMetrics metrics = parser.parse();
+        Method metrics = parser.parse();
         assertEquals("MethodName", metrics.getMethodName());
     }
     
     @Test
     public void testThatTheFileNameIsReturned() throws Exception {
         FnmetricParser parser = new FnmetricParser(GOOD_INPUT);
-        MethodMetrics metrics = parser.parse();
+        Method metrics = parser.parse();
         assertEquals("/path/to/file/File.c", metrics.getFileName());
     }
 }

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DirectoryMetrics {
+public class Directory {
     
     private String directory;
-    List<DirectoryMetrics> children = new ArrayList<>();
-    Collection<FileMetrics> fileMetrics = new ArrayList<>();
+    List<Directory> children = new ArrayList<>();
+    Collection<File> fileMetrics = new ArrayList<>();
 
-    public DirectoryMetrics(String directory) {
+    public Directory(String directory) {
         this.directory = directory;
     }
 
@@ -18,19 +18,19 @@ public class DirectoryMetrics {
         return directory;
     }
 
-    public void addChild(DirectoryMetrics child) {
+    public void addChild(Directory child) {
         children.add(child);
     }
 
-    public List<DirectoryMetrics> getChildren() {
+    public List<Directory> getChildren() {
         return children;
     }
     
-    public void addFileMetrics(FileMetrics metric) {
+    public void addFileMetrics(File metric) {
         fileMetrics.add(metric);
     }
 
-    public Collection<FileMetrics> getFileMetrics() {
+    public Collection<File> getFileMetrics() {
         return fileMetrics;
     }
 

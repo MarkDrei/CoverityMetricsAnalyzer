@@ -13,8 +13,8 @@ import java.util.TreeMap;
  */
 public class DirectoryHierarchyGenerator {
 
-    public Collection<DirectoryMetrics> buildHierarchy(Collection<FileMetrics> fileMetrics) {
-        SortedMap<String, DirectoryMetrics> directories = combineFilesInSameDirectories(fileMetrics);
+    public Collection<Directory> buildHierarchy(Collection<File> fileMetrics) {
+        SortedMap<String, Directory> directories = combineFilesInSameDirectories(fileMetrics);
         convertToHierarchy(directories);
         
         return directories.values();
@@ -24,7 +24,7 @@ public class DirectoryHierarchyGenerator {
      * Puts all sub-directories into their parent-directories
      * @param directories InOut param
      */
-    private void convertToHierarchy(SortedMap<String, DirectoryMetrics> directories) {
+    private void convertToHierarchy(SortedMap<String, Directory> directories) {
         /*
          * Idea: The map is sorted, such that
          * pathA
@@ -34,9 +34,9 @@ public class DirectoryHierarchyGenerator {
          * We walk over all elements, and if the parent of a path matches the predecessor, then we add it as a child
          * and remove it later from the flat hierarchy
          */
-        Entry<String, DirectoryMetrics>  previousEntry = null;
+        Entry<String, Directory>  previousEntry = null;
         List<String> elementsToRemove = new ArrayList<>();
-        for (Entry<String, DirectoryMetrics> entry : directories.entrySet()) {
+        for (Entry<String, Directory> entry : directories.entrySet()) {
             String previousPath = previousEntry == null? null : previousEntry.getKey();
             if (getParentPath(entry.getKey()).equals(previousPath)) {
                 previousEntry.getValue().addChild(entry.getValue());
@@ -57,13 +57,13 @@ public class DirectoryHierarchyGenerator {
      * @return the mapping from directory path -> DirectoryMetrics. The result is still flat, that means that
      * sub-directories are not contained in their parent directories
      */
-    private SortedMap<String, DirectoryMetrics> combineFilesInSameDirectories(Collection<FileMetrics> fileMetrics) {
-        SortedMap<String, DirectoryMetrics> directories = new TreeMap<>();
-        for (FileMetrics fileMetric : fileMetrics) {
+    private SortedMap<String, Directory> combineFilesInSameDirectories(Collection<File> fileMetrics) {
+        SortedMap<String, Directory> directories = new TreeMap<>();
+        for (File fileMetric : fileMetrics) {
             String path = getParentPath(fileMetric.getFile());
-            DirectoryMetrics directoryMetrics = directories.get(path);
+            Directory directoryMetrics = directories.get(path);
             if (directoryMetrics == null) {
-                directoryMetrics = new DirectoryMetrics(path);
+                directoryMetrics = new Directory(path);
                 directories.put(path, directoryMetrics);
             }
             directoryMetrics.addFileMetrics(fileMetric);

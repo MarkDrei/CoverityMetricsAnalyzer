@@ -9,16 +9,16 @@ import java.util.Map;
  * Maps all metrics to the files to which they belong
  *
  */
-public class FileMetricsList {
+public class FileListGenerator {
 
-    public Collection<FileMetrics> generateFileMetrics(List<MethodMetrics> metrics) {
-        Map<String, FileMetrics> fileMap = new HashMap<>();
-        for (MethodMetrics metric : metrics) {
+    public Collection<File> generateFileMetrics(List<Method> metrics) {
+        Map<String, File> fileMap = new HashMap<>();
+        for (Method metric : metrics) {
             // get the right element
             String fileName = metric.getFileName();
-            FileMetrics fileMetrics = fileMap.get(fileName);
+            File fileMetrics = fileMap.get(fileName);
             if (fileMetrics == null) {
-                fileMetrics = new FileMetrics(fileName);
+                fileMetrics = new File(fileName);
                 fileMap.put(fileName, fileMetrics);
             }
             fileMetrics.addMethodMetric(metric);

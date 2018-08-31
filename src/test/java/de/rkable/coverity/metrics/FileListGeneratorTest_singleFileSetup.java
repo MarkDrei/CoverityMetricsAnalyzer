@@ -9,23 +9,23 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.Method.MethodMetricsBuilder;
 
-public class FileMetricsListTest_singleFileSetup {
+public class FileListGeneratorTest_singleFileSetup {
     
-    private static Collection<FileMetrics> fileMetrics;
+    private static Collection<File> fileMetrics;
     
     @BeforeAll
     public static void setup() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        MethodMetrics metricsA = builder.fileName("fileA").methodName("methodA").build();
+        Method metricsA = builder.fileName("fileA").methodName("methodA").build();
         
         builder = new MethodMetricsBuilder();
-        MethodMetrics metricsB = builder.fileName("fileA").methodName("methodB").build();  
+        Method metricsB = builder.fileName("fileA").methodName("methodB").build();  
         
-        List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB);
+        List<Method> metrics = Arrays.asList(metricsA, metricsB);
         
-        FileMetricsList hierarchyBuilder = new FileMetricsList();
+        FileListGenerator hierarchyBuilder = new FileListGenerator();
         fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
     }
 
@@ -39,8 +39,8 @@ public class FileMetricsListTest_singleFileSetup {
     
     @Test
     public void ensureMethodMetricsAreAccessible() {
-        FileMetrics fileMetric = fileMetrics.iterator().next();
-        Collection<MethodMetrics> methodMetrics = fileMetric.getMethodMetrics();
+        File fileMetric = fileMetrics.iterator().next();
+        Collection<Method> methodMetrics = fileMetric.getMethodMetrics();
         assertEquals(2, methodMetrics.size());
     }
 }

@@ -4,7 +4,7 @@ package de.rkable.coverity.metrics;
  * An method which has code metrics associated to it.
  * 
  */
-public class MethodMetrics {
+public class Method {
     
     public static class MethodMetricsBuilder {
 
@@ -12,8 +12,8 @@ public class MethodMetrics {
         private String fileName;
         private Metrics metrics;
 
-        public MethodMetrics build() {
-            MethodMetrics methodMetrics = new MethodMetrics(
+        public Method build() {
+            Method methodMetrics = new Method(
                     fileName,
                     methodName,
                     metrics);
@@ -41,7 +41,7 @@ public class MethodMetrics {
     private final String methodName;
     private final String fileName;
     
-    public MethodMetrics(String fileName, String methodName, Metrics metrics) {
+    public Method(String fileName, String methodName, Metrics metrics) {
         this.fileName = fileName;
         this.methodName = methodName;
         this.metrics = metrics;

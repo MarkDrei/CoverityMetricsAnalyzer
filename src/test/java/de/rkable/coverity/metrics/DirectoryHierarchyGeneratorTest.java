@@ -10,51 +10,51 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.rkable.coverity.metrics.DirectoryHierarchyGenerator;
-import de.rkable.coverity.metrics.DirectoryMetrics;
-import de.rkable.coverity.metrics.FileMetrics;
+import de.rkable.coverity.metrics.Directory;
+import de.rkable.coverity.metrics.File;
 
 public class DirectoryHierarchyGeneratorTest {
 
     @Test
     public void combineTwoFilesInSameDirectory() {
-        FileMetrics metricsA = new FileMetrics("fileA");
-        FileMetrics metricsB = new FileMetrics("fileB");
+        File metricsA = new File("fileA");
+        File metricsB = new File("fileB");
         
-        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
+        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
         assertEquals(1, directories.size());
         assertEquals("", directories.iterator().next().getDirectory());
     }
     
     @Test
     public void combineTwoFilesInSameSubDirectory() {
-        FileMetrics metricsA = new FileMetrics("path/fileA");
-        FileMetrics metricsB = new FileMetrics("path/fileB");
+        File metricsA = new File("path/fileA");
+        File metricsB = new File("path/fileB");
         
-        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
+        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
         assertEquals(1, directories.size());
         assertEquals("path", directories.iterator().next().getDirectory());
     }
     
     @Test
     public void combineTwoFilesDifferentDirectories() {
-        FileMetrics metricsA = new FileMetrics("pathA/fileA");
-        FileMetrics metricsB = new FileMetrics("pathB/fileB");
+        File metricsA = new File("pathA/fileA");
+        File metricsB = new File("pathB/fileB");
         
-        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
+        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
         assertEquals(2, directories.size());
         
         // collect the paths
         List<String> dirs = new ArrayList<>();
-        for(DirectoryMetrics d : directories) {
+        for(Directory d : directories) {
             dirs.add(d.getDirectory());
         }
         
@@ -64,18 +64,18 @@ public class DirectoryHierarchyGeneratorTest {
     
     @Test
     public void combineTwoFilesDifferentDirectoryLevels() {
-        FileMetrics metricsA = new FileMetrics("pathA/pathAB/fileA");
-        FileMetrics metricsB = new FileMetrics("pathB/fileA");
+        File metricsA = new File("pathA/pathAB/fileA");
+        File metricsB = new File("pathB/fileA");
         
-        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
+        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
         assertEquals(2, directories.size());
         
         // collect the paths
         List<String> dirs = new ArrayList<>();
-        for(DirectoryMetrics d : directories) {
+        for(Directory d : directories) {
             dirs.add(d.getDirectory());
         }
         
@@ -85,17 +85,17 @@ public class DirectoryHierarchyGeneratorTest {
     
     @Test
     public void combineTwoFilesWithCommonSubdirectory() {
-        FileMetrics metricsA = new FileMetrics("pathA/pathAB/pathABC/fileA");
-        FileMetrics metricsB = new FileMetrics("pathA/pathAB/fileA");
-        FileMetrics metricsC = new FileMetrics("pathA/fileA");
+        File metricsA = new File("pathA/pathAB/pathABC/fileA");
+        File metricsB = new File("pathA/pathAB/fileA");
+        File metricsC = new File("pathA/fileA");
         
-        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB, metricsC);
+        List<File> filesMetrics = Arrays.asList(metricsA, metricsB, metricsC);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
+        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
         assertEquals(1, directories.size());
         assertEquals("pathA", directories.iterator().next().getDirectory());
-        List<DirectoryMetrics> children = directories.iterator().next().getChildren();
+        List<Directory> children = directories.iterator().next().getChildren();
         assertEquals(1, children.size());
         assertEquals("pathA/pathAB", children.get(0).getDirectory());
         children = children.get(0).getChildren();
@@ -106,19 +106,19 @@ public class DirectoryHierarchyGeneratorTest {
     
     @Test
     public void ensureFileMetricsAreAvailable() {
-        FileMetrics metricsA = new FileMetrics("fileA");
-        FileMetrics metricsB = new FileMetrics("fileB");
+        File metricsA = new File("fileA");
+        File metricsB = new File("fileB");
         
-        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
-        DirectoryMetrics directoryMetrics = directories.iterator().next();
-        Collection<FileMetrics> fileMetrics = directoryMetrics.getFileMetrics();
+        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
+        Directory directoryMetrics = directories.iterator().next();
+        Collection<File> fileMetrics = directoryMetrics.getFileMetrics();
         
         assertEquals(2, fileMetrics.size());
         List<String> collectedFileNames = new ArrayList<>();
-        for (FileMetrics metric : fileMetrics) {
+        for (File metric : fileMetrics) {
             collectedFileNames.add(metric.getFile());
         }
         assertEquals(2, collectedFileNames.size());

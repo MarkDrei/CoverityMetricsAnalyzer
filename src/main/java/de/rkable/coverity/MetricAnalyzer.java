@@ -4,18 +4,18 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import de.rkable.coverity.analyze.HierarchyAnalyzer;
 import de.rkable.coverity.analyze.MetricsAnalyzer;
-import de.rkable.coverity.analyze.SimpleHalsteadAnalyzer;
 import de.rkable.coverity.input.MetricsFileReader;
 import de.rkable.coverity.metrics.DirectoryHierarchyGenerator;
-import de.rkable.coverity.metrics.DirectoryMetrics;
-import de.rkable.coverity.metrics.FileMetrics;
-import de.rkable.coverity.metrics.FileMetricsList;
-import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.Directory;
+import de.rkable.coverity.metrics.File;
+import de.rkable.coverity.metrics.FileListGenerator;
+import de.rkable.coverity.metrics.Method;
 
 public class MetricAnalyzer {
     
-    static MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
+    static MetricsAnalyzer analyzer = new HierarchyAnalyzer();
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -33,11 +33,11 @@ public class MetricAnalyzer {
             return;
         }
         
-        List<MethodMetrics> metricEntities = fileReader.getMetricEntities();
-        FileMetricsList metricsList = new FileMetricsList();
-        Collection<FileMetrics> fileMetrics = metricsList.generateFileMetrics(metricEntities);
+        List<Method> metricEntities = fileReader.getMetricEntities();
+        FileListGenerator metricsList = new FileListGenerator();
+        Collection<File> fileMetrics = metricsList.generateFileMetrics(metricEntities);
         DirectoryHierarchyGenerator hierarchyGenerator = new DirectoryHierarchyGenerator();
-        Collection<DirectoryMetrics> hierarchy = hierarchyGenerator.buildHierarchy(fileMetrics);
+        Collection<Directory> hierarchy = hierarchyGenerator.buildHierarchy(fileMetrics);
         
         analyzer.startAnalysis(hierarchy);
         System.out.println(analyzer.getAnalysis());

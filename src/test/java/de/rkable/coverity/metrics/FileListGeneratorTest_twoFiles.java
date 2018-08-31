@@ -10,29 +10,29 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.metrics.FileMetrics;
-import de.rkable.coverity.metrics.FileMetricsList;
-import de.rkable.coverity.metrics.MethodMetrics;
-import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.File;
+import de.rkable.coverity.metrics.FileListGenerator;
+import de.rkable.coverity.metrics.Method;
+import de.rkable.coverity.metrics.Method.MethodMetricsBuilder;
 
-public class FileMetricsListTest_twoFiles {
+public class FileListGeneratorTest_twoFiles {
     
-    private static Collection<FileMetrics> fileMetrics;
+    private static Collection<File> fileMetrics;
     
     @BeforeAll
     static public void setup() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        MethodMetrics metricsA = builder.fileName("fileA").methodName("methodA").build();
+        Method metricsA = builder.fileName("fileA").methodName("methodA").build();
         
         builder = new MethodMetricsBuilder();
-        MethodMetrics metricsB = builder.fileName("fileB").methodName("methodB").build();  
+        Method metricsB = builder.fileName("fileB").methodName("methodB").build();  
         
         builder = new MethodMetricsBuilder();
-        MethodMetrics metricsC = builder.fileName("fileB").methodName("methodC").build();
+        Method metricsC = builder.fileName("fileB").methodName("methodC").build();
         
-        List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB, metricsC);
+        List<Method> metrics = Arrays.asList(metricsA, metricsB, metricsC);
         
-        FileMetricsList hierarchyBuilder = new FileMetricsList();
+        FileListGenerator hierarchyBuilder = new FileListGenerator();
         fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
     }
 
@@ -43,7 +43,7 @@ public class FileMetricsListTest_twoFiles {
         
         // check the files
         List<String> fileNames = new ArrayList<>();
-        for (FileMetrics fileMetric : fileMetrics) {
+        for (File fileMetric : fileMetrics) {
             fileNames.add(fileMetric.getFile());
         }
         assertTrue(fileNames.contains("fileA"));
@@ -53,8 +53,8 @@ public class FileMetricsListTest_twoFiles {
     @Test
     public void testThatFileAContainsOneMetric() {
         // find correct fileMetric
-        FileMetrics lookup = null;
-        for (FileMetrics fileMetric : fileMetrics) {
+        File lookup = null;
+        for (File fileMetric : fileMetrics) {
             if (fileMetric.getFile() == "fileA") {
                 lookup = fileMetric;
                 break;
@@ -66,8 +66,8 @@ public class FileMetricsListTest_twoFiles {
     @Test
     public void testThatFileBContainsTwoMetrics() {
         // find correct fileMetric
-        FileMetrics lookup = null;
-        for (FileMetrics fileMetric : fileMetrics) {
+        File lookup = null;
+        for (File fileMetric : fileMetrics) {
             if (fileMetric.getFile() == "fileB") {
                 lookup = fileMetric;
                 break;

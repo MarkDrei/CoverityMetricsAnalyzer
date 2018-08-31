@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import de.rkable.coverity.metrics.DirectoryMetrics;
-import de.rkable.coverity.metrics.FileMetrics;
-import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.Directory;
+import de.rkable.coverity.metrics.File;
+import de.rkable.coverity.metrics.Method;
 
 public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
     
     private final static String HALSTEAD_EFFORT = "Halstead effort";
     private final static String HALSTEAD_ERROR = "Halstead error";
     
-    private MethodMetrics worstMethod;
+    private Method worstMethod;
 
 
     @Override
-    public void startAnalysis(Collection<DirectoryMetrics> directories) {
-        Collection<MethodMetrics> methodMetrics = new ArrayList<>();
+    public void startAnalysis(Collection<Directory> directories) {
+        Collection<Method> methodMetrics = new ArrayList<>();
         addAllMethodMetrics(methodMetrics, directories);
         
-        for (MethodMetrics metric : methodMetrics) {
+        for (Method metric : methodMetrics) {
             if (worstMethod == null) {
                 worstMethod = metric;
                 continue;
@@ -32,12 +32,12 @@ public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
         }
     }
 
-    private void addAllMethodMetrics(Collection<MethodMetrics> methodMetrics,
-            Collection<DirectoryMetrics> directories) {
-        for(DirectoryMetrics dir : directories) {
+    private void addAllMethodMetrics(Collection<Method> methodMetrics,
+            Collection<Directory> directories) {
+        for(Directory dir : directories) {
             addAllMethodMetrics(methodMetrics, dir.getChildren());
-            for (FileMetrics file : dir.getFileMetrics()) {
-                for (MethodMetrics method : file.getMethodMetrics()) {
+            for (File file : dir.getFileMetrics()) {
+                for (Method method : file.getMethodMetrics()) {
                     methodMetrics.add(method);
                 }
             }

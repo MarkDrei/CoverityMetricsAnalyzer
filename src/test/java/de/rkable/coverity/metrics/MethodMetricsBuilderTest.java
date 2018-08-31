@@ -4,16 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.Method;
 import de.rkable.coverity.metrics.Metrics;
-import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.Method.MethodMetricsBuilder;
 
 public class MethodMetricsBuilderTest {
 
     @Test
     public void testSimpleConstruction() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        MethodMetrics metrics = builder.build();
+        Method metrics = builder.build();
         assertNotNull(metrics);
     }
     
@@ -21,7 +21,7 @@ public class MethodMetricsBuilderTest {
     public void testConstructionWithStrings() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
         builder.methodName("methodName").fileName("fileName").methodName("methodName");
-        MethodMetrics metrics = builder.build();
+        Method metrics = builder.build();
         assertEquals("methodName", metrics.getMethodName());
         assertEquals("fileName", metrics.getFileName());
     }
@@ -31,7 +31,7 @@ public class MethodMetricsBuilderTest {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
         Metrics metricValues = new Metrics(0.123, 0.03);
         builder.metrics(metricValues).methodName("methodName");
-        MethodMetrics metrics = builder.build();
+        Method metrics = builder.build();
         assertEquals("methodName", metrics.getMethodName());
         assertEquals(metricValues, metrics.getMetrics());
     }

@@ -2,8 +2,8 @@ package de.rkable.coverity.input;
 
 import java.io.IOException;
 
-import de.rkable.coverity.metrics.MethodMetrics;
-import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.Method;
+import de.rkable.coverity.metrics.Method.MethodMetricsBuilder;
 
 public class FnmetricParser {
 
@@ -24,7 +24,7 @@ public class FnmetricParser {
         /* closeMetric =   input[6]; */
     }
 
-    public MethodMetrics parse() throws IOException {
+    public Method parse() throws IOException {
 
         MetricsLineParser fileParser = new MetricsLineParser(file);
         MetricsLineParser namesParser = new MetricsLineParser(names);

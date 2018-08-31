@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.Method;
 
 /**
  * Reader for a file which contains metrics.
@@ -17,7 +17,7 @@ import de.rkable.coverity.metrics.MethodMetrics;
  */
 public class MetricsFileReader {
 	
-	private List<MethodMetrics> methodMetrics;
+	private List<Method> methodMetrics;
 	private String path;
 	
 	/**
@@ -27,7 +27,7 @@ public class MetricsFileReader {
 		this.path = file;
 	}
 
-	public List<MethodMetrics> getMetricEntities() {
+	public List<Method> getMetricEntities() {
 		return methodMetrics;
 	}
 
