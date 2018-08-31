@@ -1,6 +1,6 @@
 package de.rkable.coverity.metrics;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

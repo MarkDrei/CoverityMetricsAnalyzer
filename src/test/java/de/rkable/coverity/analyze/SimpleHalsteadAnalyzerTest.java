@@ -2,47 +2,39 @@ package de.rkable.coverity.analyze;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
+import de.rkable.coverity.metrics.DirectoryMetrics;
+import de.rkable.coverity.metrics.FileMetrics;
 import de.rkable.coverity.metrics.MethodMetrics;
-import de.rkable.coverity.metrics.Metrics;
 import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.Metrics;
 
 public class SimpleHalsteadAnalyzerTest {
 
     @Test
     public void testThatReportContainsHalsteadEffort() {
-        List<MethodMetrics> inputMetrics = new ArrayList<>();
-        inputMetrics.add(getInputMetric1());
-        
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(inputMetrics);
+        analyzer.startAnalysis(Arrays.asList(getInputMetric1()));
         Report analysis = analyzer.getAnalysis();
         assertContains("Halstead effort: 0.123", analysis.toString());
     }
     
     @Test
     public void testThatSReportContainsHalsteadDifferentEffort() {
-        List<MethodMetrics> inputMetrics = new ArrayList<>();
-        inputMetrics.add(getInputMetric2());
-        
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(inputMetrics);
+        analyzer.startAnalysis(Arrays.asList(getInputMetric2()));
         Report analysis = analyzer.getAnalysis();
         assertContains("Halstead effort: 0.234", analysis.toString());
     }
     
     @Test
     public void testThatSReportContainsHighestHalsteadEffort() {
-        List<MethodMetrics> inputMetrics = new ArrayList<>();
-        inputMetrics.add(getInputMetric1());
-        inputMetrics.add(getInputMetric2());
-        
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(inputMetrics);
+        analyzer.startAnalysis(getTwoInputs());
         Report analysis = analyzer.getAnalysis();
         assertContains("Halstead effort: 0.234", analysis.toString());
     }
@@ -50,45 +42,56 @@ public class SimpleHalsteadAnalyzerTest {
     
     @Test
     public void testThatReportContainsTheMethodName() {
-        List<MethodMetrics> inputMetrics = new ArrayList<>();
-        inputMetrics.add(getInputMetric1());
-        inputMetrics.add(getInputMetric2());
-        
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(inputMetrics);
+        analyzer.startAnalysis(getTwoInputs());
         Report analysis = analyzer.getAnalysis();
         assertContains("MethodName2", analysis.toString());
     }
     
     @Test
     public void testThatReportContainsFileName() {
-        List<MethodMetrics> inputMetrics = new ArrayList<>();
-        inputMetrics.add(getInputMetric1());
-        inputMetrics.add(getInputMetric2());
-        
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(inputMetrics);
+        analyzer.startAnalysis(getTwoInputs());
         Report analysis = analyzer.getAnalysis();
-        assertContains("/path/to/file2", analysis.toString());
+        assertContains("/dir/file2", analysis.toString());
     }
 
     private void assertContains(String needle, String haystack) {
         assertTrue(haystack.contains(needle), "\"" + haystack +"\" is exptected to contain \"" + needle + "\"");
     }
+    
+    private Collection<DirectoryMetrics> getTwoInputs() {
+        Arrays.asList(getInputMetric1(), getInputMetric2());
+        return Arrays.asList(getInputMetric1(), getInputMetric2());
+    }
 
-    private MethodMetrics getInputMetric1() {
+    private DirectoryMetrics getInputMetric1() {
         MethodMetricsBuilder metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.123, 0.02));
         metrics.methodName("MethodName1");
-        metrics.fileName("/path/to/file1");
-        return metrics.build();
+        metrics.fileName("/dir/file");
+        MethodMetrics method = metrics.build();
+        
+        FileMetrics file = new FileMetrics("file");
+        file.addMethodMetric(method);
+        DirectoryMetrics directory = new DirectoryMetrics("dir");
+        directory.addFileMetrics(file);
+        
+        return directory;
     }
     
-    private MethodMetrics getInputMetric2() {
+    private DirectoryMetrics getInputMetric2() {
         MethodMetricsBuilder metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.234, 0.04));
         metrics.methodName("MethodName2");
-        metrics.fileName("/path/to/file2");
-        return metrics.build();
+        metrics.fileName("/dir/file2");
+        MethodMetrics method = metrics.build();
+        
+        FileMetrics file = new FileMetrics("file2");
+        file.addMethodMetric(method);
+        DirectoryMetrics directory = new DirectoryMetrics("dir");
+        directory.addFileMetrics(file);
+        
+        return directory;
     }
 }

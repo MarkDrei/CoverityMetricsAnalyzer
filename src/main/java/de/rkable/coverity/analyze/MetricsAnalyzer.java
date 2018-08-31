@@ -1,8 +1,8 @@
 package de.rkable.coverity.analyze;
 
-import java.util.List;
+import java.util.Collection;
 
-import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.DirectoryMetrics;
 
 /**
  * Can analyze metrics and produce a human readable report 
@@ -10,7 +10,7 @@ import de.rkable.coverity.metrics.MethodMetrics;
  */
 public interface MetricsAnalyzer {
 
-    void startAnalysis(List<MethodMetrics> inputMetrics);
+    void startAnalysis(Collection<DirectoryMetrics> inputMetrics);
 
     Report getAnalysis();
 

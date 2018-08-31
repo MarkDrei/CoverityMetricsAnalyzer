@@ -13,7 +13,7 @@ import java.util.TreeMap;
  */
 public class DirectoryHierarchyGenerator {
 
-    public Collection<DirectoryMetrics> buildHierarchy(List<FileMetrics> fileMetrics) {
+    public Collection<DirectoryMetrics> buildHierarchy(Collection<FileMetrics> fileMetrics) {
         SortedMap<String, DirectoryMetrics> directories = combineFilesInSameDirectories(fileMetrics);
         convertToHierarchy(directories);
         
@@ -57,7 +57,7 @@ public class DirectoryHierarchyGenerator {
      * @return the mapping from directory path -> DirectoryMetrics. The result is still flat, that means that
      * sub-directories are not contained in their parent directories
      */
-    private SortedMap<String, DirectoryMetrics> combineFilesInSameDirectories(List<FileMetrics> fileMetrics) {
+    private SortedMap<String, DirectoryMetrics> combineFilesInSameDirectories(Collection<FileMetrics> fileMetrics) {
         SortedMap<String, DirectoryMetrics> directories = new TreeMap<>();
         for (FileMetrics fileMetric : fileMetrics) {
             String path = getParentPath(fileMetric.getFile());

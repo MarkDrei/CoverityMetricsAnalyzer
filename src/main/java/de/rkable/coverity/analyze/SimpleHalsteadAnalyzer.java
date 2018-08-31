@@ -1,7 +1,11 @@
 package de.rkable.coverity.analyze;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import de.rkable.coverity.metrics.DirectoryMetrics;
+import de.rkable.coverity.metrics.FileMetrics;
 import de.rkable.coverity.metrics.MethodMetrics;
 
 public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
@@ -11,18 +15,31 @@ public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
     
     private MethodMetrics worstMethod;
 
-    /* (non-Javadoc)
-     * @see de.rkable.coverity.analyze.MetricsAnalyzer#startAnalysis(java.util.List)
-     */
+
     @Override
-    public void startAnalysis(List<MethodMetrics> inputMetrics) {
-        for (MethodMetrics metric : inputMetrics) {
+    public void startAnalysis(Collection<DirectoryMetrics> directories) {
+        Collection<MethodMetrics> methodMetrics = new ArrayList<>();
+        addAllMethodMetrics(methodMetrics, directories);
+        
+        for (MethodMetrics metric : methodMetrics) {
             if (worstMethod == null) {
                 worstMethod = metric;
                 continue;
             }
             if (worstMethod.getMetrics().halsteadEffort < metric.getMetrics().halsteadEffort) {
                 worstMethod = metric;
+            }
+        }
+    }
+
+    private void addAllMethodMetrics(Collection<MethodMetrics> methodMetrics,
+            Collection<DirectoryMetrics> directories) {
+        for(DirectoryMetrics dir : directories) {
+            addAllMethodMetrics(methodMetrics, dir.getChildren());
+            for (FileMetrics file : dir.getFileMetrics()) {
+                for (MethodMetrics method : file.getMethodMetrics()) {
+                    methodMetrics.add(method);
+                }
             }
         }
     }
