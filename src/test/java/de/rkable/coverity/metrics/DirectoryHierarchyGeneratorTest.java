@@ -1,4 +1,4 @@
-package de.rkable.coverity.analyze;
+package de.rkable.coverity.metrics;
 
 import static org.junit.Assert.*;
 
@@ -9,8 +9,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.DirectoryMetrics;
-import de.rkable.coverity.FileMetrics;
+import de.rkable.coverity.metrics.DirectoryHierarchyGenerator;
+import de.rkable.coverity.metrics.DirectoryMetrics;
+import de.rkable.coverity.metrics.FileMetrics;
 
 public class DirectoryHierarchyGeneratorTest {
 

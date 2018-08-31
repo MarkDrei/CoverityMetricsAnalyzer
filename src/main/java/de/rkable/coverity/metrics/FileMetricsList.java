@@ -1,12 +1,9 @@
-package de.rkable.coverity.analyze;
+package de.rkable.coverity.metrics;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.rkable.coverity.FileMetrics;
-import de.rkable.coverity.MethodMetrics;
 
 /**
  * Maps all metrics to the files to which they belong

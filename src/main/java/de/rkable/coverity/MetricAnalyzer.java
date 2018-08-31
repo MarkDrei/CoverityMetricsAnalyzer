@@ -6,6 +6,7 @@ import java.util.List;
 import de.rkable.coverity.analyze.MetricsAnalyzer;
 import de.rkable.coverity.analyze.SimpleHalsteadAnalyzer;
 import de.rkable.coverity.input.MetricsFileReader;
+import de.rkable.coverity.metrics.MethodMetrics;
 
 public class MetricAnalyzer {
 

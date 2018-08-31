@@ -1,4 +1,4 @@
-package de.rkable.coverity.analyze;
+package de.rkable.coverity.metrics;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,9 +9,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.FileMetrics;
-import de.rkable.coverity.MethodMetrics;
-import de.rkable.coverity.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.FileMetrics;
+import de.rkable.coverity.metrics.FileMetricsList;
+import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
 
 public class FileMetricsListTest {
 

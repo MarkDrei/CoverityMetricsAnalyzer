@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.rkable.coverity.MethodMetrics;
+import de.rkable.coverity.metrics.MethodMetrics;
 
 /**
  * Reader for a file which contains metrics.

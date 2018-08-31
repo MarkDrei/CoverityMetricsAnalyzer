@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import de.rkable.coverity.MethodMetrics;
+import de.rkable.coverity.metrics.MethodMetrics;
 
 public class FnmetricParserTest {
 

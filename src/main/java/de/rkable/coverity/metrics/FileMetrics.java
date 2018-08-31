@@ -1,8 +1,8 @@
-package de.rkable.coverity;
+package de.rkable.coverity.metrics;
 
 public class FileMetrics {
 
-    private String fileName;
+    private final String fileName;
 
     public FileMetrics(String fileName) {
         this.fileName = fileName;

@@ -1,4 +1,4 @@
-package de.rkable.coverity.analyze;
+package de.rkable.coverity.metrics;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import de.rkable.coverity.DirectoryMetrics;
-import de.rkable.coverity.FileMetrics;
 
 /**
  * Converts a bunch of file metrics into a hierarchy of directory metrics

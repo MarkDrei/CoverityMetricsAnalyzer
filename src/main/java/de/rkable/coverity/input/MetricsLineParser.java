@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.rkable.coverity.Metrics;
+import de.rkable.coverity.metrics.Metrics;
 
 /**
  * Parser for a single line in the metrics file

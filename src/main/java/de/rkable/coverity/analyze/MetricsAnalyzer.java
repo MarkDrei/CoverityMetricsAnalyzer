@@ -2,7 +2,7 @@ package de.rkable.coverity.analyze;
 
 import java.util.List;
 
-import de.rkable.coverity.MethodMetrics;
+import de.rkable.coverity.metrics.MethodMetrics;
 
 /**
  * Can analyze metrics and produce a human readable report 

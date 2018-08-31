@@ -1,4 +1,4 @@
-package de.rkable.coverity;
+package de.rkable.coverity.metrics;
 
 import java.util.ArrayList;
 import java.util.List;

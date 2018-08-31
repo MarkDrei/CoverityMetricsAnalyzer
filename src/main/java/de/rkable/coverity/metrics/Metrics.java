@@ -1,4 +1,4 @@
-package de.rkable.coverity;
+package de.rkable.coverity.metrics;
 
 /**
  * Metrics for a single method

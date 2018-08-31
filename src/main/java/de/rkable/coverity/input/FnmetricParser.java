@@ -2,8 +2,8 @@ package de.rkable.coverity.input;
 
 import java.io.IOException;
 
-import de.rkable.coverity.MethodMetrics;
-import de.rkable.coverity.MethodMetrics.MethodMetricsBuilder;
+import de.rkable.coverity.metrics.MethodMetrics;
+import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
 
 public class FnmetricParser {
 

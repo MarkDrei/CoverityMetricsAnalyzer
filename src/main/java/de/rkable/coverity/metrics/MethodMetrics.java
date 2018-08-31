@@ -1,4 +1,4 @@
-package de.rkable.coverity;
+package de.rkable.coverity.metrics;
 
 /**
  * An method which has code metrics associated to it.
