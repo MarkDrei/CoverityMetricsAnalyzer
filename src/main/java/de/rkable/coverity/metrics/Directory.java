@@ -30,7 +30,7 @@ public class Directory {
         fileMetrics.add(metric);
     }
 
-    public Collection<File> getFileMetrics() {
+    public Collection<File> getFiles() {
         return fileMetrics;
     }
 
