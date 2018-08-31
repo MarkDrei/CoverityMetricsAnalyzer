@@ -21,6 +21,7 @@ public class FileMetricsList {
                 fileMetrics = new FileMetrics(fileName);
                 fileMap.put(fileName, fileMetrics);
             }
+            fileMetrics.addMethodMetric(metric);
         }
         return fileMap.values();
     }

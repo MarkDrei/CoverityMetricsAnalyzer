@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import de.rkable.coverity.metrics.FileMetrics;
@@ -14,27 +15,12 @@ import de.rkable.coverity.metrics.FileMetricsList;
 import de.rkable.coverity.metrics.MethodMetrics;
 import de.rkable.coverity.metrics.MethodMetrics.MethodMetricsBuilder;
 
-public class FileMetricsListTest {
-
-    @Test
-    public void combineTwoMethodsInOneFile() {
-        MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        MethodMetrics metricsA = builder.fileName("fileA").methodName("methodA").build();
-        
-        builder = new MethodMetricsBuilder();
-        MethodMetrics metricsB = builder.fileName("fileA").methodName("methodB").build();  
-        
-        List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB);
-        
-        FileMetricsList hierarchyBuilder = new FileMetricsList();
-        Collection<FileMetrics> fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
-        
-        assertEquals(1, fileMetrics.size());
-        assertEquals("fileA", fileMetrics.iterator().next().getFile());
-    }
+public class FileMetricsListTest_twoFiles {
     
-    @Test
-    public void combineTwoMethodsInTwoFile() {
+    private static Collection<FileMetrics> fileMetrics;
+    
+    @BeforeAll
+    static public void setup() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
         MethodMetrics metricsA = builder.fileName("fileA").methodName("methodA").build();
         
@@ -47,8 +33,12 @@ public class FileMetricsListTest {
         List<MethodMetrics> metrics = Arrays.asList(metricsA, metricsB, metricsC);
         
         FileMetricsList hierarchyBuilder = new FileMetricsList();
-        Collection<FileMetrics> fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
-        
+        fileMetrics = hierarchyBuilder.generateFileMetrics(metrics);
+    }
+
+    
+    @Test
+    public void combineTwoMethodsInTwoFile() {
         assertEquals(2, fileMetrics.size());
         
         // check the files
@@ -59,4 +49,31 @@ public class FileMetricsListTest {
         assertTrue(fileNames.contains("fileA"));
         assertTrue(fileNames.contains("fileB"));
     }
+    
+    @Test
+    public void testThatFileAContainsOneMetric() {
+        // find correct fileMetric
+        FileMetrics lookup = null;
+        for (FileMetrics fileMetric : fileMetrics) {
+            if (fileMetric.getFile() == "fileA") {
+                lookup = fileMetric;
+                break;
+            }
+        }
+        assertEquals(1, lookup.getMethodMetrics().size());
+    }
+    
+    @Test
+    public void testThatFileBContainsTwoMetrics() {
+        // find correct fileMetric
+        FileMetrics lookup = null;
+        for (FileMetrics fileMetric : fileMetrics) {
+            if (fileMetric.getFile() == "fileB") {
+                lookup = fileMetric;
+                break;
+            }
+        }
+        assertEquals(2, lookup.getMethodMetrics().size());
+    }
+
 }

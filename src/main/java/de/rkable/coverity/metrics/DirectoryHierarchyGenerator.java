@@ -66,6 +66,7 @@ public class DirectoryHierarchyGenerator {
                 directoryMetrics = new DirectoryMetrics(path);
                 directories.put(path, directoryMetrics);
             }
+            directoryMetrics.addFileMetrics(fileMetric);
         }
         return directories;
     }

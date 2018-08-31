@@ -18,7 +18,7 @@ public class DirectoryHierarchyGeneratorTest {
     @Test
     public void combineTwoFilesInSameDirectory() {
         FileMetrics metricsA = new FileMetrics("fileA");
-        FileMetrics metricsB = new FileMetrics("fileA");
+        FileMetrics metricsB = new FileMetrics("fileB");
         
         List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
         
@@ -31,7 +31,7 @@ public class DirectoryHierarchyGeneratorTest {
     @Test
     public void combineTwoFilesInSameSubDirectory() {
         FileMetrics metricsA = new FileMetrics("path/fileA");
-        FileMetrics metricsB = new FileMetrics("path/fileA");
+        FileMetrics metricsB = new FileMetrics("path/fileB");
         
         List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
         
@@ -44,7 +44,7 @@ public class DirectoryHierarchyGeneratorTest {
     @Test
     public void combineTwoFilesDifferentDirectories() {
         FileMetrics metricsA = new FileMetrics("pathA/fileA");
-        FileMetrics metricsB = new FileMetrics("pathB/fileA");
+        FileMetrics metricsB = new FileMetrics("pathB/fileB");
         
         List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
         
@@ -102,5 +102,27 @@ public class DirectoryHierarchyGeneratorTest {
         assertEquals(1, children.size());
         assertEquals("pathA/pathAB/pathABC", children.get(0).getDirectory());
         assertEquals(0, children.get(0).getChildren().size());
+    }
+    
+    @Test
+    public void ensureFileMetricsAreAvailable() {
+        FileMetrics metricsA = new FileMetrics("fileA");
+        FileMetrics metricsB = new FileMetrics("fileB");
+        
+        List<FileMetrics> filesMetrics = Arrays.asList(metricsA, metricsB);
+        
+        DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
+        Collection<DirectoryMetrics> directories = hierarchy.buildHierarchy(filesMetrics);
+        DirectoryMetrics directoryMetrics = directories.iterator().next();
+        Collection<FileMetrics> fileMetrics = directoryMetrics.getFileMetrics();
+        
+        assertEquals(2, fileMetrics.size());
+        List<String> collectedFileNames = new ArrayList<>();
+        for (FileMetrics metric : fileMetrics) {
+            collectedFileNames.add(metric.getFile());
+        }
+        assertEquals(2, collectedFileNames.size());
+        assertTrue(collectedFileNames.contains("fileA"));
+        assertTrue(collectedFileNames.contains("fileB"));
     }
 }
