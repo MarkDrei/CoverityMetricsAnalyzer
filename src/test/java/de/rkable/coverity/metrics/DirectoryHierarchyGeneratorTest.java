@@ -114,7 +114,7 @@ public class DirectoryHierarchyGeneratorTest {
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
         Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
         Directory directoryMetrics = directories.iterator().next();
-        Collection<File> fileMetrics = directoryMetrics.getFileMetrics();
+        Collection<File> fileMetrics = directoryMetrics.getFiles();
         
         assertEquals(2, fileMetrics.size());
         List<String> collectedFileNames = new ArrayList<>();

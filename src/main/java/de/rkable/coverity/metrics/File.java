@@ -20,7 +20,7 @@ public class File {
         methodMetrics.add(metrics);
     }
 
-    public Collection<Method> getMethodMetrics() {
+    public Collection<Method> getMethods() {
         return methodMetrics;
     }
 

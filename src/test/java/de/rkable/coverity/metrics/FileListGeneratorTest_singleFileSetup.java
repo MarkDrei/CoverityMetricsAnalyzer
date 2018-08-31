@@ -40,7 +40,7 @@ public class FileListGeneratorTest_singleFileSetup {
     @Test
     public void ensureMethodMetricsAreAccessible() {
         File fileMetric = fileMetrics.iterator().next();
-        Collection<Method> methodMetrics = fileMetric.getMethodMetrics();
+        Collection<Method> methodMetrics = fileMetric.getMethods();
         assertEquals(2, methodMetrics.size());
     }
 }

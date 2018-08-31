@@ -36,8 +36,8 @@ public class SimpleHalsteadAnalyzer implements MetricsAnalyzer {
             Collection<Directory> directories) {
         for(Directory dir : directories) {
             addAllMethodMetrics(methodMetrics, dir.getChildren());
-            for (File file : dir.getFileMetrics()) {
-                for (Method method : file.getMethodMetrics()) {
+            for (File file : dir.getFiles()) {
+                for (Method method : file.getMethods()) {
                     methodMetrics.add(method);
                 }
             }

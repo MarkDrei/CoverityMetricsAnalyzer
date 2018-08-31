@@ -60,7 +60,7 @@ public class FileListGeneratorTest_twoFiles {
                 break;
             }
         }
-        assertEquals(1, lookup.getMethodMetrics().size());
+        assertEquals(1, lookup.getMethods().size());
     }
     
     @Test
@@ -73,7 +73,7 @@ public class FileListGeneratorTest_twoFiles {
                 break;
             }
         }
-        assertEquals(2, lookup.getMethodMetrics().size());
+        assertEquals(2, lookup.getMethods().size());
     }
 
 }
