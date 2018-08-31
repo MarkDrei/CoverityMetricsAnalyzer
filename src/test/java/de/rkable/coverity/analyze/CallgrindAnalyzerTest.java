@@ -6,6 +6,6 @@ public class CallgrindAnalyzerTest {
 
     @Test
     public void test() {
-        MetricsAnalyzer analyzer = new CallgrindAnalyzer();
+//        MetricsAnalyzer analyzer = new CallgrindAnalyzer();
     }
 }

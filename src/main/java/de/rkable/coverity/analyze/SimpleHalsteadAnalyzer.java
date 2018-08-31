@@ -2,7 +2,6 @@ package de.rkable.coverity.analyze;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import de.rkable.coverity.metrics.Directory;
 import de.rkable.coverity.metrics.File;
