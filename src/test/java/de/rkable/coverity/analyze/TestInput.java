@@ -19,7 +19,7 @@ public class TestInput {
         MethodMetricsBuilder metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.123, 0.02));
         metrics.methodName("MethodName1");
-        metrics.fileName("/dir/file");
+        metrics.fileName("/dir/file1");
         Method method = metrics.build();
         
         File file = new File("file");

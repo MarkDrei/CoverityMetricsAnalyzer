@@ -1,7 +1,5 @@
 package de.rkable.coverity.analyze;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +11,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(Arrays.asList(TestInput.getInputMetric1()));
         Report analysis = analyzer.getAnalysis();
-        assertContains("Halstead effort: 0.123", analysis.toString());
+        StringAssertions.assertContains("Halstead effort: 0.123", analysis.toString());
     }
     
     @Test
@@ -21,7 +19,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(Arrays.asList(TestInput.getInputMetric2()));
         Report analysis = analyzer.getAnalysis();
-        assertContains("Halstead effort: 0.234", analysis.toString());
+        StringAssertions.assertContains("Halstead effort: 0.234", analysis.toString());
     }
     
     @Test
@@ -29,7 +27,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(TestInput.getTwoInputs());
         Report analysis = analyzer.getAnalysis();
-        assertContains("Halstead effort: 0.234", analysis.toString());
+        StringAssertions.assertContains("Halstead effort: 0.234", analysis.toString());
     }
     
     
@@ -38,7 +36,7 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(TestInput.getTwoInputs());
         Report analysis = analyzer.getAnalysis();
-        assertContains("MethodName2", analysis.toString());
+        StringAssertions.assertContains("MethodName2", analysis.toString());
     }
     
     @Test
@@ -46,10 +44,6 @@ public class SimpleHalsteadAnalyzerTest {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
         analyzer.startAnalysis(TestInput.getTwoInputs());
         Report analysis = analyzer.getAnalysis();
-        assertContains("/dir/file2", analysis.toString());
-    }
-
-    private void assertContains(String needle, String haystack) {
-        assertTrue(haystack.contains(needle), "\"" + haystack +"\" is exptected to contain \"" + needle + "\"");
+        StringAssertions.assertContains("/dir/file2", analysis.toString());
     }
 }
