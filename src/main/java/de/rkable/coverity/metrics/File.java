@@ -5,23 +5,36 @@ import java.util.Collection;
 
 public class File {
 
-    private final String fileName;
+    private final String path;
     private final Collection<Method> methodMetrics = new ArrayList<>();
 
-    public File(String fileName) {
-        this.fileName = fileName;
+    public File(String path) {
+        this.path = path;
     }
     
-    public String getFile() {
-        return fileName;
+    public String getPath() {
+        return path;
     }
     
-    public void addMethodMetric(Method metrics) {
+    public String getFileName() {
+        return path.substring(path.lastIndexOf('/') + 1);
+    }
+    
+    
+    public void addMethod(Method metrics) {
         methodMetrics.add(metrics);
     }
 
     public Collection<Method> getMethods() {
         return methodMetrics;
+    }
+
+    public Metrics getCombinedMetric() {
+        Metrics result = Metrics.createEmptyMetrics();
+        for (Method method : getMethods()) {
+            result = result.combine(method.getMetrics());
+        }
+        return result;
     }
 
 }

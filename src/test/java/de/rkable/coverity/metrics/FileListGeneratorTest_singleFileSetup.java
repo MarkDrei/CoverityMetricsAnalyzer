@@ -33,7 +33,7 @@ public class FileListGeneratorTest_singleFileSetup {
     @Test
     public void combineTwoMethodsInOneFile() {
         assertEquals(1, fileMetrics.size());
-        assertEquals("fileA", fileMetrics.iterator().next().getFile());
+        assertEquals("fileA", fileMetrics.iterator().next().getPath());
     }
     
     

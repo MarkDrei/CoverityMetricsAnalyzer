@@ -27,48 +27,139 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
     @Override
     public void startAnalysis(Collection<Directory> inputMetrics) {
         sb.append("# callgrind format");
-        sb.append(System.lineSeparator());
+        appendNewline();
         sb.append("positions: index");
-        sb.append(System.lineSeparator());
+        appendNewline();
         sb.append("events: HalsteadEffort HalsteadError");
-        sb.append(System.lineSeparator());
-        sb.append(System.lineSeparator());
+        appendNewline();
+        appendNewline();
         
         appendAllDirectories(inputMetrics);
     }
 
     private void appendAllDirectories(Collection<Directory> directories) {
         for (Directory directory : directories) {
-            appendAllDirectories(directory.getChildren());
+            //appendCallsToSubDirectories(directory);
+            appendCallsToFiles(directory);
             appendAllFiles(directory.getFiles());
+            appendAllDirectories(directory.getChildren());
         }
+    }
+
+    private void appendCallsToFiles(Directory directory) {
+        appendDirectoryReference(directory);
+        appendMetrics(null);
+        
+        for (File file : directory.getFiles()) {
+            appendFileReference(file, true);
+            appendCallStatement();
+            appendCumulatedMetrics(file);
+        }
+        appendNewline();
+    }
+    
+    private void appendCumulatedMetrics(File file) {
+        appendMetrics(file.getCombinedMetric());
     }
 
     private void appendAllFiles(Collection<File> files) {
         for (File file : files) {
+            appendFileCallHierarchy(file);
             appendAllMethods(file.getMethods());
         }
     }
 
+    private void appendFileCallHierarchy(File file) {
+        appendFileReference(file, false);
+        appendMetrics(null);
+        
+        for (Method method : file.getMethods()) {
+            appendMethodReference(method, true);
+            appendCallStatement();
+            appendMetrics(method.getMetrics());
+        }
+        appendNewline();
+    }
+    
     private void appendAllMethods(Collection<Method> methods) {
-        // The index simulates the line number which is expected in the output 
         for (Method method : methods) {
-            sb.append("fl=");
-            sb.append(method.getFileName());
-            sb.append(System.lineSeparator());
+            appendFilePathReference(method.getFileName());
             
-            sb.append("fn=");
-            sb.append(method.getMethodName());
-            sb.append(System.lineSeparator());
+            appendMethodReference(method, false);
             
-            Metrics metrics = method.getMetrics();
+            appendMetrics(method.getMetrics());
+            
+            appendNewline();
+        }
+    }
+
+    private void appendDirectoryReference(Directory directory) {
+        sb.append("fl=");
+        sb.append(directory.getDirectory());
+        appendNewline();
+        
+        sb.append("fn=directory ");
+        sb.append(directory.getDirectory());
+        appendNewline();
+    }
+
+    private void appendFileReference(File file, boolean isCallReference) {
+        if (isCallReference) {
+            sb.append("cfi");
+        } else {
+            sb.append("fl");
+        }
+        sb.append("=");
+        sb.append(file.getPath());
+        appendNewline();
+        
+        if (isCallReference) {
+            sb.append('c');
+        } 
+        sb.append("fn=file ");
+        sb.append(file.getFileName());
+        appendNewline();
+    }
+    
+    private void appendCallStatement() {
+        sb.append("calls=1");
+        appendNewline();
+    }
+
+    private void appendFilePathReference(String path) {
+        sb.append("fl=");
+        sb.append(path);
+        appendNewline();
+    }
+    
+    private void appendMetrics(Metrics metrics) {
+        if (metrics != null) {
             sb.append(toFakeInt(metrics.halsteadEffort));
             sb.append(" ");
             sb.append(toFakeInt(metrics.halsteadError));
-            sb.append(System.lineSeparator());
-            
-            sb.append(System.lineSeparator());
+        } else {
+            sb.append("0 0");
         }
+        appendNewline();
+    }
+    
+    /**
+     * 
+     * @param isCallReference <code>true</code> to append a reference for a call, <code>false</code>
+     * to append a direct reference
+     */
+    private void appendMethodReference(Method method, boolean isCallReference) {
+        if (isCallReference)
+        {
+            sb.append('c');
+        }
+        sb.append("fn=method ");
+        sb.append(method.getMethodName());
+        appendNewline();
+    }
+    
+    private void appendNewline() {
+        sb.append(System.lineSeparator());
     }
     
     /**

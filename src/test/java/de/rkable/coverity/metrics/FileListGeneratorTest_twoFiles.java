@@ -44,7 +44,7 @@ public class FileListGeneratorTest_twoFiles {
         // check the files
         List<String> fileNames = new ArrayList<>();
         for (File fileMetric : fileMetrics) {
-            fileNames.add(fileMetric.getFile());
+            fileNames.add(fileMetric.getPath());
         }
         assertTrue(fileNames.contains("fileA"));
         assertTrue(fileNames.contains("fileB"));
@@ -55,7 +55,7 @@ public class FileListGeneratorTest_twoFiles {
         // find correct fileMetric
         File lookup = null;
         for (File fileMetric : fileMetrics) {
-            if (fileMetric.getFile() == "fileA") {
+            if (fileMetric.getPath() == "fileA") {
                 lookup = fileMetric;
                 break;
             }
@@ -68,7 +68,7 @@ public class FileListGeneratorTest_twoFiles {
         // find correct fileMetric
         File lookup = null;
         for (File fileMetric : fileMetrics) {
-            if (fileMetric.getFile() == "fileB") {
+            if (fileMetric.getPath() == "fileB") {
                 lookup = fileMetric;
                 break;
             }

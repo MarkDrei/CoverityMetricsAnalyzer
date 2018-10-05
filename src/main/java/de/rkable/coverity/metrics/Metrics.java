@@ -16,7 +16,7 @@ public class Metrics {
 
     @Override
     public String toString() {
-        return "Metrics [halsteadEffort=" + halsteadEffort + "]";
+        return "Metrics [halsteadEffort=" + halsteadEffort + "; halsteadError=" + halsteadError + "]";
     }
 
     @Override
@@ -45,6 +45,14 @@ public class Metrics {
         if (Double.doubleToLongBits(halsteadError) != Double.doubleToLongBits(other.halsteadError))
             return false;
         return true;
+    }
+
+    public Metrics combine(Metrics metrics) {
+        return new Metrics(metrics.halsteadEffort + halsteadEffort, metrics.halsteadError + halsteadError);
+    }
+
+    public static Metrics createEmptyMetrics() {
+        return new Metrics(0, 0);
     }
 
 }

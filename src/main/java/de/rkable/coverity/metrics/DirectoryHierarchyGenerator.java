@@ -60,7 +60,7 @@ public class DirectoryHierarchyGenerator {
     private SortedMap<String, Directory> combineFilesInSameDirectories(Collection<File> fileMetrics) {
         SortedMap<String, Directory> directories = new TreeMap<>();
         for (File fileMetric : fileMetrics) {
-            String path = getParentPath(fileMetric.getFile());
+            String path = getParentPath(fileMetric.getPath());
             Directory directoryMetrics = directories.get(path);
             if (directoryMetrics == null) {
                 directoryMetrics = new Directory(path);

@@ -119,7 +119,7 @@ public class DirectoryHierarchyGeneratorTest {
         assertEquals(2, fileMetrics.size());
         List<String> collectedFileNames = new ArrayList<>();
         for (File metric : fileMetrics) {
-            collectedFileNames.add(metric.getFile());
+            collectedFileNames.add(metric.getPath());
         }
         assertEquals(2, collectedFileNames.size());
         assertTrue(collectedFileNames.contains("fileA"));

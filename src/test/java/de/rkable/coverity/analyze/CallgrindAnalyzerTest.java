@@ -46,8 +46,8 @@ public class CallgrindAnalyzerTest {
 
     @Test
     public void testThatAllMethodsArePresent() {
-        assertAnalysisContains("fn=MethodName1");
-        assertAnalysisContains("fn=MethodName2");
+        assertAnalysisContains("fn=method MethodName1");
+        assertAnalysisContains("fn=method MethodName2");
     }
     
     @Test
@@ -63,12 +63,38 @@ public class CallgrindAnalyzerTest {
                 + "positions: index\n"
                 + "events: HalsteadEffort HalsteadError\n"
                 + "\n"
+                + "fl=/dir\n"
+                + "fn=directory /dir\n"
+                + "0 0\n"
+                + "cfi=/dir/file1\n"
+                + "cfn=file file1\n"
+                + "calls=1\n"
+                + "123 20\n"
+                + "cfi=/dir/file2\n"
+                + "cfn=file file2\n"
+                + "calls=1\n"
+                + "234 40\n"
+                + "\n"
                 + "fl=/dir/file1\n"
-                + "fn=MethodName1\n"
+                + "fn=file file1\n"
+                + "0 0\n"
+                + "cfn=method MethodName1\n"
+                + "calls=1\n"
+                + "123 20\n"
+                + "\n"
+                + "fl=/dir/file1\n"
+                + "fn=method MethodName1\n"
                 + "123 20\n"
                 + "\n"
                 + "fl=/dir/file2\n"
-                + "fn=MethodName2\n"
+                + "fn=file file2\n"
+                + "0 0\n"
+                + "cfn=method MethodName2\n"
+                + "calls=1\n"
+                + "234 40\n"
+                + "\n"
+                + "fl=/dir/file2\n"
+                + "fn=method MethodName2\n"
                 + "234 40\n"
                 + "\n"
                 ;

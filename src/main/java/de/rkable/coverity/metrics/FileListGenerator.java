@@ -21,7 +21,7 @@ public class FileListGenerator {
                 fileMetrics = new File(fileName);
                 fileMap.put(fileName, fileMetrics);
             }
-            fileMetrics.addMethodMetric(metric);
+            fileMetrics.addMethod(metric);
         }
         return fileMap.values();
     }
