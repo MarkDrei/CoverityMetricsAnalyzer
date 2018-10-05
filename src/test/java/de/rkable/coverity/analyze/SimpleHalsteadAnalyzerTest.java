@@ -9,7 +9,7 @@ public class SimpleHalsteadAnalyzerTest {
     @Test
     public void testThatReportContainsHalsteadEffort() {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(Arrays.asList(TestInput.getInputMetric1()));
+        analyzer.startAnalysis(Arrays.asList(TestInput.getInputMetricFile1Method1()));
         Report analysis = analyzer.getAnalysis();
         StringAssertions.assertContains("Halstead effort: 0.123", analysis.toString());
     }
@@ -17,7 +17,7 @@ public class SimpleHalsteadAnalyzerTest {
     @Test
     public void testThatSReportContainsHalsteadDifferentEffort() {
         MetricsAnalyzer analyzer = new SimpleHalsteadAnalyzer();
-        analyzer.startAnalysis(Arrays.asList(TestInput.getInputMetric2()));
+        analyzer.startAnalysis(Arrays.asList(TestInput.getInputMetricFile2Method2()));
         Report analysis = analyzer.getAnalysis();
         StringAssertions.assertContains("Halstead effort: 0.234", analysis.toString());
     }
