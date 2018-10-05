@@ -34,4 +34,15 @@ public class Directory {
         return fileMetrics;
     }
 
+    public Metrics getCombindedMetric() {
+        Metrics result = Metrics.createEmptyMetrics();
+        for (Directory directory : getChildren()) {
+            result = result.combine(directory.getCombindedMetric());
+        }
+        for (File file : getFiles()) {
+            result = result.combine(file.getCombinedMetric());
+        }
+        return result;
+    }
+
 }

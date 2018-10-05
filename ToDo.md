@@ -1,6 +1,8 @@
 ToDo List
 ==========
 
+test public Metrics getCombindedMetric() in Directory
+
 continue CallgrindAnalyzerTest
 
 Make the report pretty

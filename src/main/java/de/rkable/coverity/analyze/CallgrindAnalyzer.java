@@ -39,23 +39,35 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
 
     private void appendAllDirectories(Collection<Directory> directories) {
         for (Directory directory : directories) {
-            //appendCallsToSubDirectories(directory);
+            appendDirectoryReference(directory, false);
+            appendMetrics(null);
+            
+            appendCallsToSubDirectories(directory);
             appendCallsToFiles(directory);
             appendAllFiles(directory.getFiles());
             appendAllDirectories(directory.getChildren());
         }
     }
 
+    private void appendCallsToSubDirectories(Directory directory) {
+        for (Directory child : directory.getChildren()) {
+            appendDirectoryReference(child, true);
+            appendCallStatement();
+            appendCumulatedMetrics(directory);
+        }
+    }
+
     private void appendCallsToFiles(Directory directory) {
-        appendDirectoryReference(directory);
-        appendMetrics(null);
-        
         for (File file : directory.getFiles()) {
             appendFileReference(file, true);
             appendCallStatement();
             appendCumulatedMetrics(file);
         }
         appendNewline();
+    }
+    
+    private void appendCumulatedMetrics(Directory directory) {
+        appendMetrics(directory.getCombindedMetric());
     }
     
     private void appendCumulatedMetrics(File file) {
@@ -93,11 +105,18 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
         }
     }
 
-    private void appendDirectoryReference(Directory directory) {
-        sb.append("fl=");
+    private void appendDirectoryReference(Directory directory, boolean isCallReference) {
+        if(isCallReference) {
+            sb.append("cfi=");
+        } else {
+            sb.append("fl=");
+        }
         sb.append(directory.getDirectory());
         appendNewline();
         
+        if(isCallReference) {
+            sb.append("c");
+        }
         sb.append("fn=directory ");
         sb.append(directory.getDirectory());
         appendNewline();

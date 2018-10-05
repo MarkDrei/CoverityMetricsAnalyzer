@@ -101,6 +101,73 @@ public class CallgrindAnalyzerTest {
 
         assertEquals(expected, analysis);
     }
+    
+    @Test
+    public void testHierarchicalOutput() {
+        Collection<Directory> inputs = TestInput.getThreeInputs();
+
+        MetricsAnalyzer analyzer = new CallgrindAnalyzer();
+        analyzer.startAnalysis(inputs);
+        String localAnalysis = analyzer.getAnalysis().toString();
+        assertNotNull(localAnalysis);
+        
+        String expected = "# callgrind format\n" + 
+                "positions: index\n" + 
+                "events: HalsteadEffort HalsteadError\n" + 
+                "\n" + 
+                "fl=/dir/\n" + 
+                "fn=directory /dir/\n" + 
+                "0 0\n" +
+                "cfi=/dir/sub\n" +
+                "cfn=directory /dir/sub\n" +
+                "calls=1\n" + 
+                "657 90\n" + 
+                "cfi=/dir/file2\n" + 
+                "cfn=file file2\n" + 
+                "calls=1\n" + 
+                "234 40\n" + 
+                "\n" + 
+                "fl=/dir/file2\n" + 
+                "fn=file file2\n" + 
+                "0 0\n" + 
+                "cfn=method MethodName2\n" + 
+                "calls=1\n" + 
+                "234 40\n" + 
+                "\n" + 
+                "fl=/dir/file2\n" + 
+                "fn=method MethodName2\n" + 
+                "234 40\n" + 
+                "\n" + 
+                "fl=/dir/sub\n" + 
+                "fn=directory /dir/sub\n" + 
+                "0 0\n" + 
+                "cfi=/dir/sub/file1\n" + 
+                "cfn=file file1\n" + 
+                "calls=1\n" + 
+                "423 50\n" + 
+                "\n" + 
+                "fl=/dir/sub/file1\n" + 
+                "fn=file file1\n" + 
+                "0 0\n" + 
+                "cfn=method MethodName1\n" + 
+                "calls=1\n" + 
+                "123 20\n" + 
+                "cfn=method MethodName3\n" + 
+                "calls=1\n" + 
+                "300 30\n" + 
+                "\n" + 
+                "fl=/dir/sub/file1\n" + 
+                "fn=method MethodName1\n" + 
+                "123 20\n" + 
+                "\n" + 
+                "fl=/dir/sub/file1\n" + 
+                "fn=method MethodName3\n" + 
+                "300 30\n" + 
+                "\n"
+                ;
+        
+        assertEquals(expected, localAnalysis);
+    }
 }
 
 
