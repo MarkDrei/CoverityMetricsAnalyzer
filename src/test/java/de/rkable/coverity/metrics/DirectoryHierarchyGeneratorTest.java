@@ -77,11 +77,38 @@ public class DirectoryHierarchyGeneratorTest {
         Directory directory = hierarchy.buildHierarchy(fileList);
         
         String expected = 
-                "directory: /\n" + 
-                "    directory: /pathA/pathAB\n" + 
-                "      file: /pathA/pathAB/fileA\n" + 
+                "directory: /\n" +
+                "    directory: /pathA\n" + 
+                "        directory: /pathA/pathAB\n" + 
+                "          file: /pathA/pathAB/fileA\n" + 
                 "    directory: /pathB\n" + 
                 "      file: /pathB/fileA\n";
+        
+        assertEquals(expected, directory.printHierarchy());
+    }
+    
+    @Test
+    public void ensureHierarchyIsGenerated() {
+        File metricsA = new File("/pathA/pathB/pathC/pathD/fileA");
+        File metricsB = new File("/bPAthA/bPathB/bPathC/bPathD/fileA");
+        
+        List<File> fileList = Arrays.asList(metricsA, metricsB);
+        
+        DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
+        Directory directory = hierarchy.buildHierarchy(fileList);
+        
+        String expected = 
+                "directory: /\n" + 
+                "    directory: /bPAthA\n" + 
+                "        directory: /bPAthA/bPathB\n" + 
+                "            directory: /bPAthA/bPathB/bPathC\n" + 
+                "                directory: /bPAthA/bPathB/bPathC/bPathD\n" + 
+                "                  file: /bPAthA/bPathB/bPathC/bPathD/fileA\n" + 
+                "    directory: /pathA\n" + 
+                "        directory: /pathA/pathB\n" + 
+                "            directory: /pathA/pathB/pathC\n" + 
+                "                directory: /pathA/pathB/pathC/pathD\n" + 
+                "                  file: /pathA/pathB/pathC/pathD/fileA\n";
         
         assertEquals(expected, directory.printHierarchy());
     }

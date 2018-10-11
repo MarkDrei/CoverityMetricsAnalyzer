@@ -56,6 +56,7 @@ public class DirectoryHierarchyGenerator {
                     parentFound = true;
                 }
                 parent.addChild(directory);
+                directory = parent;
             }
         }
         
