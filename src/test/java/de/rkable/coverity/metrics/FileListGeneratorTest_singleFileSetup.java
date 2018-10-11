@@ -18,10 +18,10 @@ public class FileListGeneratorTest_singleFileSetup {
     @BeforeAll
     public static void setup() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        Method metricsA = builder.fileName("fileA").methodName("methodA").build();
+        Method metricsA = builder.fileName("/fileA").methodName("methodA").build();
         
         builder = new MethodMetricsBuilder();
-        Method metricsB = builder.fileName("fileA").methodName("methodB").build();  
+        Method metricsB = builder.fileName("/fileA").methodName("methodB").build();  
         
         List<Method> metrics = Arrays.asList(metricsA, metricsB);
         
@@ -33,7 +33,7 @@ public class FileListGeneratorTest_singleFileSetup {
     @Test
     public void combineTwoMethodsInOneFile() {
         assertEquals(1, fileMetrics.size());
-        assertEquals("fileA", fileMetrics.iterator().next().getPath());
+        assertEquals("/fileA", fileMetrics.iterator().next().getPath());
     }
     
     

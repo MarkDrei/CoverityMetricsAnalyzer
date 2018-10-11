@@ -22,13 +22,13 @@ public class FileListGeneratorTest_twoFiles {
     @BeforeAll
     static public void setup() {
         MethodMetricsBuilder builder = new MethodMetricsBuilder();
-        Method metricsA = builder.fileName("fileA").methodName("methodA").build();
+        Method metricsA = builder.fileName("/fileA").methodName("methodA").build();
         
         builder = new MethodMetricsBuilder();
-        Method metricsB = builder.fileName("fileB").methodName("methodB").build();  
+        Method metricsB = builder.fileName("/fileB").methodName("methodB").build();  
         
         builder = new MethodMetricsBuilder();
-        Method metricsC = builder.fileName("fileB").methodName("methodC").build();
+        Method metricsC = builder.fileName("/fileB").methodName("methodC").build();
         
         List<Method> metrics = Arrays.asList(metricsA, metricsB, metricsC);
         
@@ -46,8 +46,8 @@ public class FileListGeneratorTest_twoFiles {
         for (File fileMetric : fileMetrics) {
             fileNames.add(fileMetric.getPath());
         }
-        assertTrue(fileNames.contains("fileA"));
-        assertTrue(fileNames.contains("fileB"));
+        assertTrue(fileNames.contains("/fileA"));
+        assertTrue(fileNames.contains("/fileB"));
     }
     
     @Test
@@ -55,7 +55,7 @@ public class FileListGeneratorTest_twoFiles {
         // find correct fileMetric
         File lookup = null;
         for (File fileMetric : fileMetrics) {
-            if (fileMetric.getPath() == "fileA") {
+            if (fileMetric.getPath() == "/fileA") {
                 lookup = fileMetric;
                 break;
             }
@@ -68,7 +68,7 @@ public class FileListGeneratorTest_twoFiles {
         // find correct fileMetric
         File lookup = null;
         for (File fileMetric : fileMetrics) {
-            if (fileMetric.getPath() == "fileB") {
+            if (fileMetric.getPath() == "/fileB") {
                 lookup = fileMetric;
                 break;
             }

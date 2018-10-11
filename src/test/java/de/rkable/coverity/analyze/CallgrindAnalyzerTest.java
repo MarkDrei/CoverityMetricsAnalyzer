@@ -121,7 +121,7 @@ public class CallgrindAnalyzerTest {
                 "cfi=/dir/sub\n" +
                 "cfn=directory /dir/sub\n" +
                 "calls=1\n" + 
-                "657 90\n" + 
+                "423 50\n" + 
                 "cfi=/dir/file2\n" + 
                 "cfn=file file2\n" + 
                 "calls=1\n" + 

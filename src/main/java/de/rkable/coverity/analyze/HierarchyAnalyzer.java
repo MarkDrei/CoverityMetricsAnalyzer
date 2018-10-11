@@ -49,7 +49,7 @@ public class HierarchyAnalyzer implements MetricsAnalyzer {
     private void appendDirectory(Directory directory) {
         //appendIndent(indent);
         sb.append("Directory: ");
-        sb.append(directory.getDirectory());
+        sb.append(directory.getPath());
         newline();
         
         appendIndent(1);

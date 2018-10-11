@@ -21,7 +21,7 @@ public class TestInput {
         File file = new File("/dir/file1");
         file.addMethod(method);
         Directory directory = new Directory("/dir");
-        directory.addFileMetrics(file);
+        directory.addFile(file);
         
         metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.234, 0.04));
@@ -31,7 +31,7 @@ public class TestInput {
         
         file = new File("/dir/file2");
         file.addMethod(method);
-        directory.addFileMetrics(file);
+        directory.addFile(file);
         
         return Arrays.asList(directory);
     }
@@ -53,7 +53,7 @@ public class TestInput {
         file.addMethod(method);
         file.addMethod(method3);
         Directory sub = new Directory("/dir/sub");
-        sub.addFileMetrics(file);
+        sub.addFile(file);
         
         metrics = new MethodMetricsBuilder();
         metrics.metrics(new Metrics(0.234, 0.04));
@@ -64,7 +64,7 @@ public class TestInput {
         file = new File("/dir/file2");
         file.addMethod(method);
         Directory directory = new Directory("/dir/");
-        directory.addFileMetrics(file);
+        directory.addFile(file);
         directory.addChild(sub);
         
         return Arrays.asList(directory);
@@ -81,7 +81,7 @@ public class TestInput {
         File file = new File("/dir/file1");
         file.addMethod(method);
         Directory directory = new Directory("/dir");
-        directory.addFileMetrics(file);
+        directory.addFile(file);
         
         return directory;
     }
@@ -96,7 +96,7 @@ public class TestInput {
         File file = new File("/dir/file2");
         file.addMethod(method);
         Directory directory = new Directory("/dir");
-        directory.addFileMetrics(file);
+        directory.addFile(file);
         
         return directory;
     }

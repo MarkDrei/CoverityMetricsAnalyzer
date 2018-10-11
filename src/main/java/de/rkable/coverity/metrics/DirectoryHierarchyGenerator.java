@@ -1,8 +1,8 @@
 package de.rkable.coverity.metrics;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -13,41 +13,53 @@ import java.util.TreeMap;
  */
 public class DirectoryHierarchyGenerator {
 
-    public Collection<Directory> buildHierarchy(Collection<File> fileMetrics) {
+    public Directory buildHierarchy(Collection<File> fileMetrics) {
         SortedMap<String, Directory> directories = combineFilesInSameDirectories(fileMetrics);
-        convertToHierarchy(directories);
-        
-        return directories.values();
+        return convertToHierarchy(directories);
     }
 
     /**
      * Puts all sub-directories into their parent-directories
      * @param directories InOut param
      */
-    private void convertToHierarchy(SortedMap<String, Directory> directories) {
-        /*
-         * Idea: The map is sorted, such that
-         * pathA
-         * pathA/pathB
-         * pathA/pathB/pathC
-         * 
-         * We walk over all elements, and if the parent of a path matches the predecessor, then we add it as a child
-         * and remove it later from the flat hierarchy
-         */
-        Entry<String, Directory>  previousEntry = null;
-        List<String> elementsToRemove = new ArrayList<>();
-        for (Entry<String, Directory> entry : directories.entrySet()) {
-            String previousPath = previousEntry == null? null : previousEntry.getKey();
-            if (getParentPath(entry.getKey()).equals(previousPath)) {
-                previousEntry.getValue().addChild(entry.getValue());
-                elementsToRemove.add(entry.getKey());
-            }
-            previousEntry = entry;
+    private Directory convertToHierarchy(SortedMap<String, Directory> directories) {
+        Map<String, Directory> allDirectories = new HashMap<>();
+        
+        // ensure there is a root
+        Directory root = directories.remove("/");
+        if (root == null) {
+            root = new Directory("/");
+            allDirectories.put("/", root);
         }
         
-        for (String s : elementsToRemove) {
-            directories.remove(s);
+        // fill allDirectories
+        for (Entry<String, Directory> entry : directories.entrySet()) {
+            String path = entry.getKey();
+            Directory directory = entry.getValue();
+            allDirectories.put(path, directory);
         }
+        
+        for (Entry<String, Directory> entry : directories.entrySet()) {
+            String path = entry.getKey();
+            Directory directory = entry.getValue();
+            String parentPath = getParentPath(path);
+            
+            boolean parentFound = false;
+            while(!parentFound) {
+                Directory parent = allDirectories.get(parentPath);
+                if (parent == null) {
+                    parent = new Directory(parentPath);
+                    allDirectories.put(parentPath, parent);
+                    // find parent of parent
+                    parentPath = getParentPath(parentPath);
+                } else {
+                    parentFound = true;
+                }
+                parent.addChild(directory);
+            }
+        }
+        
+        return root;
     }
 
     /**
@@ -66,13 +78,14 @@ public class DirectoryHierarchyGenerator {
                 directoryMetrics = new Directory(path);
                 directories.put(path, directoryMetrics);
             }
-            directoryMetrics.addFileMetrics(fileMetric);
+            directoryMetrics.addFile(fileMetric);
         }
         return directories;
     }
 
     private String getParentPath(String file) {
         int index = file.lastIndexOf('/');
+        if (index == 0) return "/";
         if (index == -1) return "";
         return file.substring(0, index);
     }

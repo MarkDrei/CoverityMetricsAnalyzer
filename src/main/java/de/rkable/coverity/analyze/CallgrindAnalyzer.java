@@ -53,7 +53,7 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
         for (Directory child : directory.getChildren()) {
             appendDirectoryReference(child, true);
             appendCallStatement();
-            appendCumulatedMetrics(directory);
+            appendCumulatedMetrics(child);
         }
     }
 
@@ -111,14 +111,14 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
         } else {
             sb.append("fl=");
         }
-        sb.append(directory.getDirectory());
+        sb.append(directory.getPath());
         appendNewline();
         
         if(isCallReference) {
             sb.append("c");
         }
         sb.append("fn=directory ");
-        sb.append(directory.getDirectory());
+        sb.append(directory.getPath());
         appendNewline();
     }
 

@@ -2,127 +2,141 @@ package de.rkable.coverity.metrics;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
-import de.rkable.coverity.metrics.DirectoryHierarchyGenerator;
-import de.rkable.coverity.metrics.Directory;
-import de.rkable.coverity.metrics.File;
 
 public class DirectoryHierarchyGeneratorTest {
 
     @Test
     public void combineTwoFilesInSameDirectory() {
-        File metricsA = new File("fileA");
-        File metricsB = new File("fileB");
+        File metricsA = new File("/fileA");
+        File metricsB = new File("/fileB");
         
-        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> fileList = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
-        assertEquals(1, directories.size());
-        assertEquals("", directories.iterator().next().getDirectory());
+        Directory directory = hierarchy.buildHierarchy(fileList);
+        
+        String expected = 
+                "directory: /\n" + 
+                "  file: /fileA\n" + 
+                "  file: /fileB\n";
+        
+        assertEquals(expected, directory.printHierarchy());
     }
     
     @Test
     public void combineTwoFilesInSameSubDirectory() {
-        File metricsA = new File("path/fileA");
-        File metricsB = new File("path/fileB");
+        File metricsA = new File("/path/fileA");
+        File metricsB = new File("/path/fileB");
         
-        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> fileList = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
-        assertEquals(1, directories.size());
-        assertEquals("path", directories.iterator().next().getDirectory());
+        Directory directory = hierarchy.buildHierarchy(fileList);
+        
+        String expected = 
+                "directory: /\n" +
+                "    directory: /path\n" +
+                "      file: /path/fileA\n" + 
+                "      file: /path/fileB\n";
+        
+        assertEquals(expected, directory.printHierarchy());
     }
     
     @Test
     public void combineTwoFilesDifferentDirectories() {
-        File metricsA = new File("pathA/fileA");
-        File metricsB = new File("pathB/fileB");
+        File metricsA = new File("/pathA/fileA");
+        File metricsB = new File("/pathB/fileB");
         
-        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> fileList = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
-        assertEquals(2, directories.size());
+        Directory directory = hierarchy.buildHierarchy(fileList);
         
-        // collect the paths
-        List<String> dirs = new ArrayList<>();
-        for(Directory d : directories) {
-            dirs.add(d.getDirectory());
-        }
+        String expected = 
+                "directory: /\n" + 
+                "    directory: /pathA\n" + 
+                "      file: /pathA/fileA\n" + 
+                "    directory: /pathB\n" + 
+                "      file: /pathB/fileB\n";
         
-        assertTrue(dirs.contains("pathA"));
-        assertTrue(dirs.contains("pathB"));
+        assertEquals(expected, directory.printHierarchy());
     }
     
     @Test
     public void combineTwoFilesDifferentDirectoryLevels() {
-        File metricsA = new File("pathA/pathAB/fileA");
-        File metricsB = new File("pathB/fileA");
+        File metricsA = new File("/pathA/pathAB/fileA");
+        File metricsB = new File("/pathB/fileA");
         
-        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> fileList = Arrays.asList(metricsA, metricsB);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
-        assertEquals(2, directories.size());
+        Directory directory = hierarchy.buildHierarchy(fileList);
         
-        // collect the paths
-        List<String> dirs = new ArrayList<>();
-        for(Directory d : directories) {
-            dirs.add(d.getDirectory());
-        }
+        String expected = 
+                "directory: /\n" + 
+                "    directory: /pathA/pathAB\n" + 
+                "      file: /pathA/pathAB/fileA\n" + 
+                "    directory: /pathB\n" + 
+                "      file: /pathB/fileA\n";
         
-        assertTrue(dirs.contains("pathA/pathAB"));
-        assertTrue(dirs.contains("pathB"));
+        assertEquals(expected, directory.printHierarchy());
     }
     
     @Test
     public void combineTwoFilesWithCommonSubdirectory() {
-        File metricsA = new File("pathA/pathAB/pathABC/fileA");
-        File metricsB = new File("pathA/pathAB/fileA");
-        File metricsC = new File("pathA/fileA");
+        File metricsA = new File("/pathA/pathAB/pathABC/fileA");
+        File metricsB = new File("/pathA/pathAB/fileA");
+        File metricsC = new File("/pathA/fileA");
         
-        List<File> filesMetrics = Arrays.asList(metricsA, metricsB, metricsC);
+        List<File> fileList = Arrays.asList(metricsA, metricsB, metricsC);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
-        assertEquals(1, directories.size());
-        assertEquals("pathA", directories.iterator().next().getDirectory());
-        List<Directory> children = directories.iterator().next().getChildren();
-        assertEquals(1, children.size());
-        assertEquals("pathA/pathAB", children.get(0).getDirectory());
-        children = children.get(0).getChildren();
-        assertEquals(1, children.size());
-        assertEquals("pathA/pathAB/pathABC", children.get(0).getDirectory());
-        assertEquals(0, children.get(0).getChildren().size());
+        Directory directory = hierarchy.buildHierarchy(fileList);
+        
+        String expected = 
+                "directory: /\n" + 
+                "    directory: /pathA\n" + 
+                "      file: /pathA/fileA\n" + 
+                "        directory: /pathA/pathAB\n" + 
+                "          file: /pathA/pathAB/fileA\n" + 
+                "            directory: /pathA/pathAB/pathABC\n" + 
+                "              file: /pathA/pathAB/pathABC/fileA\n";
+        
+        assertEquals(expected, directory.printHierarchy());
     }
     
     @Test
-    public void ensureFileMetricsAreAvailable() {
-        File metricsA = new File("fileA");
-        File metricsB = new File("fileB");
+    public void combineManySubdirectories() {
+        File metricsA = new File("/pathA/pathAB/fileB");
+        File metricsS = new File("/pathA/pathAC/fileS");
+        File metricsB = new File("/pathA/pathAB/fileE");
+        File metricsE = new File("/pathA/pathAB/fileF");
+        File metricsD = new File("/pathA/pathAC/fileD");
+        File metricsC = new File("/pathA/fileC");
         
-        List<File> filesMetrics = Arrays.asList(metricsA, metricsB);
+        List<File> fileList = Arrays.asList(metricsA, metricsC, metricsD, metricsS, metricsB, metricsE);
         
         DirectoryHierarchyGenerator hierarchy = new DirectoryHierarchyGenerator();
-        Collection<Directory> directories = hierarchy.buildHierarchy(filesMetrics);
-        Directory directoryMetrics = directories.iterator().next();
-        Collection<File> fileMetrics = directoryMetrics.getFiles();
+        Directory directory = hierarchy.buildHierarchy(fileList);
         
-        assertEquals(2, fileMetrics.size());
-        List<String> collectedFileNames = new ArrayList<>();
-        for (File metric : fileMetrics) {
-            collectedFileNames.add(metric.getPath());
-        }
-        assertEquals(2, collectedFileNames.size());
-        assertTrue(collectedFileNames.contains("fileA"));
-        assertTrue(collectedFileNames.contains("fileB"));
+        String expected = 
+                "directory: /\n" + 
+                "    directory: /pathA\n" + 
+                "      file: /pathA/fileC\n" + 
+                "        directory: /pathA/pathAB\n" + 
+                "          file: /pathA/pathAB/fileB\n" + 
+                "          file: /pathA/pathAB/fileE\n" + 
+                "          file: /pathA/pathAB/fileF\n" + 
+                "        directory: /pathA/pathAC\n" + 
+                "          file: /pathA/pathAC/fileD\n" + 
+                "          file: /pathA/pathAC/fileS\n";
+        
+        assertEquals(expected, directory.printHierarchy());
     }
+    
+ 
 }

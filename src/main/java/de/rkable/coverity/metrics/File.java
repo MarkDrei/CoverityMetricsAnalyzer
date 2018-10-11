@@ -9,13 +9,24 @@ public class File {
     private final Collection<Method> methodMetrics = new ArrayList<>();
 
     public File(String path) {
+        if (!path.startsWith("/")) {
+            throw new IllegalArgumentException("File paths must be absolute paths (start with '/')");
+        }
         this.path = path;
     }
     
+    /**
+     * 
+     * @return The whole path, including the file name
+     */
     public String getPath() {
         return path;
     }
     
+    /**
+     * 
+     * @return The file name without the path
+     */
     public String getFileName() {
         return path.substring(path.lastIndexOf('/') + 1);
     }
