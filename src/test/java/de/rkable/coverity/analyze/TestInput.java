@@ -100,4 +100,19 @@ public class TestInput {
         
         return directory;
     }
+    
+    public static Directory getInputMetricWithIntIverflow() {
+        MethodMetricsBuilder metrics = new MethodMetricsBuilder();
+        metrics.metrics(new Metrics(2_500_000_000.234, 2_500_000_000.04));
+        metrics.methodName("MethodName");
+        metrics.fileName("/dir/file");
+        Method method = metrics.build();
+        
+        File file = new File("/dir/file");
+        file.addMethod(method);
+        Directory directory = new Directory("/dir");
+        directory.addFile(file);
+        
+        return directory;
+    }
 }

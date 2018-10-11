@@ -3,6 +3,7 @@ package de.rkable.coverity.analyze;
 import static org.junit.jupiter.api.Assertions.*;
 import static de.rkable.coverity.analyze.StringAssertions.*;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -54,6 +55,19 @@ public class CallgrindAnalyzerTest {
     public void testThatAllMetricsArePresent() {
         assertAnalysisContains("123 20");
         assertAnalysisContains("234 40");
+    }
+    
+    @Test
+    public void testNoIntegerOverflow() {
+        Directory input = TestInput.getInputMetricWithIntIverflow();
+
+        MetricsAnalyzer analyzer = new CallgrindAnalyzer();
+        analyzer.startAnalysis(Arrays.asList(input));
+        String result = analyzer.getAnalysis().toString();
+        
+        // these numbers are bigger than int32 max
+        assertTrue(result.contains("2500000000234"));
+        assertTrue(result.contains("2500000000040"));
     }
 
     @Test

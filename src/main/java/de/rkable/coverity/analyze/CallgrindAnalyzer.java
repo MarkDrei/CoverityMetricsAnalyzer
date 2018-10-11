@@ -153,9 +153,9 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
     
     private void appendMetrics(Metrics metrics) {
         if (metrics != null) {
-            sb.append(toFakeInt(metrics.halsteadEffort));
+            sb.append(toFakeLong(metrics.halsteadEffort));
             sb.append(" ");
-            sb.append(toFakeInt(metrics.halsteadError));
+            sb.append(toFakeLong(metrics.halsteadError));
         } else {
             sb.append("0 0");
         }
@@ -188,8 +188,8 @@ public class CallgrindAnalyzer implements MetricsAnalyzer {
      * @param d
      * @return
      */
-    private int toFakeInt(double d) {
-        return (int) (1000 * d);
+    private long toFakeLong(double d) {
+        return (long) (1000 * d);
     }
 
 }
